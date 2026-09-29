@@ -49,6 +49,7 @@ if (params) {
 (function() {
 	var preloadMargin = 768;
 	var images = document.querySelectorAll(\"img[data-src]\");
+	var lazyLoadingStarted = false;
 
 	function loadImage(image) {
 		var src = image.getAttribute(\"data-src\");
@@ -77,51 +78,58 @@ if (params) {
 		}
 	}
 
-	loadImagesNearPlayer();
+	function startLazyLoading() {
+		if (lazyLoadingStarted) return;
+		lazyLoadingStarted = true;
 
-	if (\"IntersectionObserver\" in window) {
-		var observer = new IntersectionObserver(function(entries) {
-			for (var i = 0; i < entries.length; ++i) {
-				if (entries[i].isIntersecting || entries[i].intersectionRatio > 0) {
-					loadImage(entries[i].target);
-					observer.unobserve(entries[i].target);
+		if (\"IntersectionObserver\" in window) {
+			var observer = new IntersectionObserver(function(entries) {
+				for (var i = 0; i < entries.length; ++i) {
+					if (entries[i].isIntersecting || entries[i].intersectionRatio > 0) {
+						loadImage(entries[i].target);
+						observer.unobserve(entries[i].target);
+					}
 				}
-			}
-		}, { rootMargin: preloadMargin + \"px\" });
-
-		for (var i = 0; i < images.length; ++i) {
-			observer.observe(images[i]);
-		}
-	} else {
-		var loadScheduled = false;
-
-		function loadVisibleImages() {
-			loadScheduled = false;
-			var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-			var viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+			}, { rootMargin: preloadMargin + \"px\" });
 
 			for (var i = 0; i < images.length; ++i) {
-				if (!images[i].getAttribute(\"data-src\")) continue;
-				var rect = images[i].getBoundingClientRect();
-				if (rect.bottom >= -preloadMargin &&
-					rect.right >= -preloadMargin &&
-					rect.top <= viewportHeight + preloadMargin &&
-					rect.left <= viewportWidth + preloadMargin) {
-					loadImage(images[i]);
+				observer.observe(images[i]);
+			}
+		} else {
+			var loadScheduled = false;
+
+			function loadVisibleImages() {
+				loadScheduled = false;
+				var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+				var viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+
+				for (var i = 0; i < images.length; ++i) {
+					if (!images[i].getAttribute(\"data-src\")) continue;
+					var rect = images[i].getBoundingClientRect();
+					if (rect.bottom >= -preloadMargin &&
+						rect.right >= -preloadMargin &&
+						rect.top <= viewportHeight + preloadMargin &&
+						rect.left <= viewportWidth + preloadMargin) {
+						loadImage(images[i]);
+					}
 				}
 			}
-		}
 
-		function scheduleLoad() {
-			if (loadScheduled) return;
-			loadScheduled = true;
-			window.setTimeout(loadVisibleImages, 50);
-		}
+			function scheduleLoad() {
+				if (loadScheduled) return;
+				loadScheduled = true;
+				window.setTimeout(loadVisibleImages, 50);
+			}
 
-		window.addEventListener(\"scroll\", scheduleLoad, false);
-		window.addEventListener(\"resize\", scheduleLoad, false);
-		scheduleLoad();
+			window.addEventListener(\"scroll\", scheduleLoad, false);
+			window.addEventListener(\"resize\", scheduleLoad, false);
+			scheduleLoad();
+		}
 	}
+
+	loadImagesNearPlayer();
+	window.startWorldMapLazyLoading = startLazyLoading;
+	window.setTimeout(startLazyLoading, 1000);
 })();
 </script>
 
