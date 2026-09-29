@@ -99,6 +99,12 @@ javac --release 21 -proc:none -implicit:none -nowarn -encoding UTF-8 -d "$WORK/c
 find "$APP/src/test/java" -name "*.java" > "$WORK/test-sources.txt"
 javac --release 21 -proc:none -nowarn -encoding UTF-8 -d "$WORK/test-classes" -cp "$WORK/classes:$CP" "@$WORK/test-sources.txt"
 
+# At run time only: android-all's Build reads system properties natively. In android.jar
+# Build.VERSION.SDK_INT is 0, which is what the unit tests see in Gradle.
+mkdir -p "$WORK/stubs-runtime/android/os" "$WORK/runtime-overrides"
+echo 'package android.os; public class Build { public static class VERSION { public static final int SDK_INT = Integer.parseInt("0"); } }' > "$WORK/stubs-runtime/android/os/Build.java"
+javac --release 21 -nowarn -d "$WORK/runtime-overrides" "$WORK/stubs-runtime/android/os/Build.java"
+
 TESTS=$(cd "$APP/src/test/java" && find . -name "*Test.java" | sed 's|^\./||; s|\.java$||; s|/|.|g' | sort)
 cd "$APP"   # Gradle runs unit tests in the module directory.
-java -cp "$WORK/test-classes:$WORK/classes:$CP" org.junit.runner.JUnitCore $TESTS
+java -cp "$WORK/runtime-overrides:$WORK/test-classes:$WORK/classes:$CP" org.junit.runner.JUnitCore $TESTS
