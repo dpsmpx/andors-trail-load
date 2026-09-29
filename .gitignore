@@ -1,2 +1,4 @@
 /AndorsTrail/.idea/workspace.xml
 /AndorsTrail/keystore.properties
+audit/remediation/worldmap/node_modules/
+audit/remediation/worldmap/package*.json

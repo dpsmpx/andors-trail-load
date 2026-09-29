@@ -39,3 +39,21 @@ jobs:
         with:
           name: android-debug-apk
           path: AndorsTrail/app/build/outputs/apk/debug/*.apk
+
+  worldmap-page:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --prefix audit/remediation/worldmap playwright@1.56.1
+          npx --prefix audit/remediation/worldmap playwright install --with-deps chromium
+
+      - name: World map page regression tests
+        run: |
+          set -o pipefail
+          python3 audit/remediation/worldmap/build_pages.py "$RUNNER_TEMP/worldmap-pages"
+          node audit/remediation/worldmap/scenarios.js "$RUNNER_TEMP/worldmap-pages" | tee "$RUNNER_TEMP/worldmap-report.json"
