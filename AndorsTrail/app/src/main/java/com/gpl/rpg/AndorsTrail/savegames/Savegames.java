@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +31,7 @@ import com.gpl.rpg.AndorsTrail.controller.WorldMapController;
 import com.gpl.rpg.AndorsTrail.model.ModelContainer;
 import com.gpl.rpg.AndorsTrail.resource.tiles.TileManager;
 import com.gpl.rpg.AndorsTrail.util.AndroidStorage;
+import com.gpl.rpg.AndorsTrail.util.AtomicFileWriter;
 import com.gpl.rpg.AndorsTrail.util.L;
 
 public final class Savegames {
@@ -67,9 +67,8 @@ public final class Savegames {
 			byte[] savegame = bos.toByteArray();
 			bos.close();
 
-			FileOutputStream fos = getOutputFile(androidContext, slot);
-			fos.write(savegame);
-			fos.close();
+			// Replaces the previous savegame only once the new one is completely written.
+			AtomicFileWriter.write(getOutputFile(androidContext, slot), savegame);
 
 			if (!world.model.statistics.hasUnlimitedSaves()) {
 				if (slot != SLOT_QUICKSAVE) {
@@ -92,9 +91,7 @@ public final class Savegames {
 		File cheatDetectionFolder = AndroidStorage.getStorageDirectory(androidContext, Constants.CHEAT_DETECTION_FOLDER);
 		ensureDirExists(cheatDetectionFolder);
 		File backupFile = new File(cheatDetectionFolder, playerId + "X");
-		FileOutputStream fileOutputStream = new FileOutputStream(backupFile);
-		fileOutputStream.write(savegame);
-		fileOutputStream.close();
+		AtomicFileWriter.write(backupFile, savegame);
 	}
 
 	public static LoadSavegameResult loadWorld(WorldContext world, ControllerContext controllers, Context androidContext, int slot) {
@@ -196,12 +193,12 @@ public final class Savegames {
 		return (savedVersionToCheck == DENY_LOADING_BECAUSE_GAME_IS_CURRENTLY_PLAYED || fh.savedVersion < savedVersionToCheck);
 	}
 
-	private static FileOutputStream getOutputFile(Context androidContext, int slot) throws IOException {
+	private static File getOutputFile(Context androidContext, int slot) {
 		if (slot == SLOT_QUICKSAVE) {
-			return androidContext.openFileOutput(Constants.FILENAME_SAVEGAME_QUICKSAVE, Context.MODE_PRIVATE);
+			return androidContext.getFileStreamPath(Constants.FILENAME_SAVEGAME_QUICKSAVE);
 		} else {
 			ensureSavegameDirectoryExists(androidContext);
-			return new FileOutputStream(getSlotFile(slot, androidContext));
+			return getSlotFile(slot, androidContext);
 		}
 	}
 
@@ -318,17 +315,15 @@ public final class Savegames {
 		File cheatDetectionFolder = AndroidStorage.getStorageDirectory(androidContext, Constants.CHEAT_DETECTION_FOLDER);
 		ensureDirExists(cheatDetectionFolder);
 		File cheatDetectionFile = new File(cheatDetectionFolder, playerId);
-		FileOutputStream fileOutputStream = new FileOutputStream(cheatDetectionFile);
-		DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		DataOutputStream dataOutputStream = new DataOutputStream(bos);
 		CheatDetection.writeToParcel(dataOutputStream, savedVersion);
 		dataOutputStream.close();
-		fileOutputStream.close();
+		byte[] cheatCheck = bos.toByteArray();
 
-		fileOutputStream = androidContext.openFileOutput(playerId, Context.MODE_PRIVATE);
-		dataOutputStream = new DataOutputStream(fileOutputStream);
-		CheatDetection.writeToParcel(dataOutputStream, savedVersion);
-		dataOutputStream.close();
-		fileOutputStream.close();
+		// A truncated cheat detection file would make the savegame impossible to load.
+		AtomicFileWriter.write(cheatDetectionFile, cheatCheck);
+		AtomicFileWriter.write(androidContext.getFileStreamPath(playerId), cheatCheck);
 	}
 
 	private static final Pattern savegameFilenamePattern = Pattern.compile(Constants.FILENAME_SAVEGAME_FILENAME_PREFIX + "(\\d+)");

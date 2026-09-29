@@ -2,9 +2,8 @@ package com.gpl.rpg.AndorsTrail.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -33,6 +32,7 @@ import com.gpl.rpg.AndorsTrail.model.map.WorldMapSegment.NamedWorldMapArea;
 import com.gpl.rpg.AndorsTrail.model.map.WorldMapSegment.WorldMapSegmentMap;
 import com.gpl.rpg.AndorsTrail.resource.tiles.TileCollection;
 import com.gpl.rpg.AndorsTrail.util.AndroidStorage;
+import com.gpl.rpg.AndorsTrail.util.AtomicFileWriter;
 import com.gpl.rpg.AndorsTrail.util.Coord;
 import com.gpl.rpg.AndorsTrail.util.CoordRect;
 import com.gpl.rpg.AndorsTrail.util.L;
@@ -100,12 +100,18 @@ public final class WorldMapController {
 		File file = getFileForMap(context, map, false);
 		if (file.exists()) return;
 
-		Bitmap image = renderer.drawMap();
-		FileOutputStream fos = new FileOutputStream(file);
-		image.compress(Bitmap.CompressFormat.PNG, 70, fos);
-		fos.flush();
-		fos.close();
-		image.recycle();
+		final Bitmap image = renderer.drawMap();
+		try {
+			// A partially written image would count as rendered and never be replaced.
+			AtomicFileWriter.write(file, new AtomicFileWriter.Content() {
+				@Override
+				public void writeTo(OutputStream out) throws IOException {
+					if (!image.compress(Bitmap.CompressFormat.PNG, 70, out)) throw new IOException("Cannot compress world map image");
+				}
+			});
+		} finally {
+			image.recycle();
+		}
 		L.log("WorldMapController: Wrote " + file.getAbsolutePath());
 	}
 
@@ -305,9 +311,8 @@ public final class WorldMapController {
 	public static void updateWorldMapSegment(Context context, Resources res, WorldContext world, String segmentName) throws IOException {
 		String mapAsHtml = getWorldMapHtmlVersionMarker(getWorldMapHtmlVersion(res)) + "\n" + getWorldMapSegmentAsHtml(context, res, world, segmentName);
 		File outputFile = getCombinedWorldMapFile(context, segmentName);
-		PrintWriter pw = new PrintWriter(outputFile);
-		pw.write(mapAsHtml);
-		pw.close();
+		// The WebView may read the file while it is being regenerated, so replace it in one step.
+		AtomicFileWriter.write(outputFile, mapAsHtml.getBytes("UTF-8"));
 	}
 
 	// Identifies the format of the generated world map files. It includes a hash of the template, so that
@@ -334,9 +339,7 @@ public final class WorldMapController {
 	}
 
 	private static void writeWorldMapPopulationVersion(File idFile, String version) throws IOException {
-		try (FileOutputStream fos = new FileOutputStream(idFile)) {
-			fos.write(version.getBytes("UTF-8"));
-		}
+		AtomicFileWriter.write(idFile, version.getBytes("UTF-8"));
 	}
 
 	// Returns at most maxLength bytes from the start of the file, or null if the file cannot be read.
