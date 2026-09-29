@@ -169,6 +169,9 @@ public final class DisplayWorldMapActivity extends AndorsTrailBaseActivity {
 					y -= displayworldmap_webview.getHeight() / 2;
 					
 					displayworldmap_webview.scrollTo(x, y);
+					displayworldmap_webview.evaluateJavascript(
+						"if (window.startWorldMapLazyLoading) window.startWorldMapLazyLoading();",
+						null);
 				}
 			}
 		}, 100);
