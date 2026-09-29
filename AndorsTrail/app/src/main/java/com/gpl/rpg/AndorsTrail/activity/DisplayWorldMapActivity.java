@@ -26,6 +26,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public final class DisplayWorldMapActivity extends AndorsTrailBaseActivity {
+	// Lets the page load the map images around the visible area (see worldmap_template.xml).
+	// If the page script has not run, all images are loaded instead, so that the map is never left empty.
+	private static final String START_LOADING_MAP_IMAGES_JS =
+			"if (window.startWorldMapLazyLoading) {"
+			+ " window.startWorldMapLazyLoading();"
+			+ "} else {"
+			+ " var images = document.querySelectorAll('img[data-src]');"
+			+ " for (var i = 0; i < images.length; ++i) {"
+			+ "  images[i].setAttribute('src', images[i].getAttribute('data-src'));"
+			+ "  images[i].removeAttribute('data-src');"
+			+ " }"
+			+ "}";
+
 	private WorldContext world;
 
 	private WebView displayworldmap_webview;
@@ -131,7 +144,6 @@ public final class DisplayWorldMapActivity extends AndorsTrailBaseActivity {
 				+ ','
 				+ (world.model.player.position.y + map.worldPosition.y-1) * WorldMapController.WORLDMAP_DISPLAY_TILESIZE;
 		L.log("Showing " + url);
-		displayworldmap_webview.loadUrl(url);
 		displayworldmap_webview.setBackgroundColor(ThemeHelper.getThemeColor(this, R.attr.ui_theme_displayworldmap_bg_color));
 		displayworldmap_webview.setWebViewClient(new WebViewClient() {
 			@SuppressLint("NewApi")
@@ -141,6 +153,7 @@ public final class DisplayWorldMapActivity extends AndorsTrailBaseActivity {
 				recenter();
 			}
 		});
+		displayworldmap_webview.loadUrl(url);
 	}
 	
 	private void recenter() {
@@ -169,6 +182,7 @@ public final class DisplayWorldMapActivity extends AndorsTrailBaseActivity {
 					y -= displayworldmap_webview.getHeight() / 2;
 					
 					displayworldmap_webview.scrollTo(x, y);
+					displayworldmap_webview.evaluateJavascript(START_LOADING_MAP_IMAGES_JS, null);
 				}
 			}
 		}, 100);
