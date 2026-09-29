@@ -262,6 +262,8 @@ public final class PredefinedMap {
 		boolean shouldLoadMapData = true;
 		if (fileversion >= 37) shouldLoadMapData = src.readBoolean();
 
+		// Areas are matched by ID, so the saved areas are not necessarily the first ones.
+		final boolean[] loaded = new boolean[spawnAreas.length];
 		int loadedSpawnAreas = 0;
 		if (shouldLoadMapData) {
 			loadedSpawnAreas = src.readInt();
@@ -279,8 +281,9 @@ public final class PredefinedMap {
 						int start = i % this.spawnAreas.length;
 						int j = start;
 						do {
-							if (this.spawnAreas[j].areaID.equals(id)) {
+							if (!loaded[j] && this.spawnAreas[j].areaID.equals(id)) {
 								this.spawnAreas[j].readFromParcel(src, world, fileversion);
+								loaded[j] = true;
 								found = true;
 								break;
 							}
@@ -311,6 +314,7 @@ public final class PredefinedMap {
 					}
 				} else {
 					this.spawnAreas[i].readFromParcel(src, world, fileversion);
+					loaded[i] = true;
 				}
 			}
 			
@@ -374,7 +378,8 @@ public final class PredefinedMap {
 		if (fileversion < 36) lastSeenLayoutHash = "";
 		else lastSeenLayoutHash = src.readUTF();
 
-		for(int i = loadedSpawnAreas; i < spawnAreas.length; ++i) {
+		for(int i = 0; i < spawnAreas.length; ++i) {
+			if (loaded[i]) continue;
 			MonsterSpawnArea area = this.spawnAreas[i];
 			if (area.isUnique && visited) controllers.monsterSpawnController.spawnAllInArea(this, null, area, true);
 			else area.resetForNewGame();
