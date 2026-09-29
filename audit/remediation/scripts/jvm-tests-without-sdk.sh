@@ -7,7 +7,10 @@
 #
 # Differences from the Gradle unit test run:
 # - The Android framework comes from Robolectric's android-all jar (Maven Central) instead
-#   of the SDK's android.jar stubs. Tests must not call Android framework methods either way.
+#   of the mockable android.jar that Gradle uses. Tests must not call Android framework methods
+#   either way, but android-all has working implementations (for example
+#   android.util.SparseIntArray), while every method of the mockable jar throws. A test that
+#   passes here can still fail in CI when it reaches such a class.
 # - R and BuildConfig are generated stubs whose values are not the real resource ids.
 # - UI sources (activity/, view/, Dialogs) and sources using AndroidX fragments or activities are
 #   only read for their signatures and never compiled, so tests cannot load those classes. The

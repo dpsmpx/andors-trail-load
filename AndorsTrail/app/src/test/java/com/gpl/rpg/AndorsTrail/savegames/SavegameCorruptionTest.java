@@ -11,9 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Test;
@@ -21,7 +19,6 @@ import org.junit.Test;
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
 import com.gpl.rpg.AndorsTrail.model.GameStatistics;
 import com.gpl.rpg.AndorsTrail.model.ModelContainer;
-import com.gpl.rpg.AndorsTrail.model.item.Inventory;
 import com.gpl.rpg.AndorsTrail.model.map.MapObject;
 import com.gpl.rpg.AndorsTrail.model.map.MonsterSpawnArea;
 import com.gpl.rpg.AndorsTrail.model.map.PredefinedMap;
@@ -33,61 +30,53 @@ import com.gpl.rpg.AndorsTrail.util.Size;
 /**
  * A damaged savegame must fail to load with an IOException, which the caller reports as "cannot
  * load", instead of crashing the app with a RuntimeException (audit finding M4).
+ *
+ * The savegames here contain the header and the maps. The player part is not written, because
+ * Player.writeToParcel uses android.util.SparseIntArray, which JVM unit tests do not provide.
  */
 public final class SavegameCorruptionTest {
 	private static final String MAP = "testmap";
-	private static final int GOLD_MARKER = 0x13572468;
 
 	@Test
-	public void intactSavegameIsReadUpToTheEnd() throws Exception {
-		// Guards the fixture: the damaged variants below differ from this one only by the damage.
+	public void mapsOfTheFixtureAreReadBack() throws Exception {
+		// Guards the fixture used below: the maps part is complete and carries the saved state.
 		WorldContext world = createWorld();
-		DataInputStream src = new DataInputStream(new ByteArrayInputStream(save(createSavedWorld())));
+		DataInputStream src = new DataInputStream(new ByteArrayInputStream(saveHeaderAndMaps()));
 		Savegames.FileHeader header = new Savegames.FileHeader(src, false);
 		world.maps.readFromParcel(src, world, null, header.fileversion);
-		world.model = new ModelContainer(src, world, null, header.fileversion);
 		assertEquals(-1, src.read());
-		assertEquals(GOLD_MARKER, world.model.player.inventory.gold);
 		assertTrue(map(world).visited);
+		assertFalse(map(world).spawnAreas[0].isSpawning);
 	}
 
 	@Test
 	public void truncatedSavegameFailsAndLeavesNoMapState() throws Exception {
-		byte[] data = save(createSavedWorld());
-		WorldContext world = assertDamaged(Arrays.copyOf(data, data.length - 10));
+		// The file ends where the player should start.
+		WorldContext world = assertDamaged(saveHeaderAndMaps());
 		assertFalse("maps must not keep state from the failed load", map(world).visited);
 		assertTrue(map(world).spawnAreas[0].isSpawning);
 	}
 
 	@Test
-	public void outOfRangeWornSlotCountFails() throws Exception {
-		// The count of worn slots follows the gold. Claim one slot more than exists, and fill it.
-		byte[] data = save(createSavedWorld());
-		int count = indexOf(data, intBytes(GOLD_MARKER), 0) + 4;
-		int slots = readInt(data, count);
-		ByteArrayOutputStream damaged = new ByteArrayOutputStream();
-		DataOutputStream out = new DataOutputStream(damaged);
-		out.write(data, 0, count);
-		out.writeInt(slots + 1);
-		for (int i = 0; i < slots; ++i) out.writeBoolean(false);
-		out.writeBoolean(true);
-		out.writeUTF("some_item");
-		out.write(data, count + 4 + slots, data.length - (count + 4 + slots));
+	public void moreSpawnAreasThanTheMapHasFails() throws Exception {
+		// Before file version 43, spawn areas were stored by index. A count larger than the
+		// number of areas in the map used to throw ArrayIndexOutOfBoundsException.
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(bytes);
+		out.writeInt(42); // file version
+		out.writeUTF("Tester");
+		out.writeUTF("test");
+		out.writeInt(1); // maps
+		out.writeUTF(MAP);
+		out.writeBoolean(true); // map data follows
+		out.writeInt(2); // spawn areas; the map has one
+		for (int i = 0; i < 2; ++i) {
+			out.writeBoolean(false); // is spawning
+			out.writeInt(0); // monsters
+		}
 
-		WorldContext world = assertDamaged(damaged.toByteArray());
-		assertFalse(map(world).visited);
-	}
-
-	@Test
-	public void unknownCurrentMapFails() throws Exception {
-		// The map name is stored twice: in the list of saved maps and as the current map.
-		byte[] data = save(createSavedWorld());
-		byte[] name = MAP.getBytes(StandardCharsets.UTF_8);
-		int currentMap = indexOf(data, name, indexOf(data, name, 0) + 1);
-		byte[] other = "nomap00".getBytes(StandardCharsets.UTF_8);
-		System.arraycopy(other, 0, data, currentMap, name.length);
-
-		assertDamaged(data);
+		WorldContext world = assertDamaged(bytes.toByteArray());
+		assertTrue(map(world).spawnAreas[0].isSpawning);
 	}
 
 	@Test
@@ -123,17 +112,19 @@ public final class SavegameCorruptionTest {
 		return world;
 	}
 
-	private static WorldContext createSavedWorld() {
+	private static byte[] saveHeaderAndMaps() throws IOException {
 		WorldContext world = createWorld();
 		PredefinedMap map = map(world);
 		map.visited = true;
 		map.spawnAreas[0].isSpawning = false;
 		world.model = new ModelContainer(1, false);
-		world.model.player.setName("Tester");
-		world.model.player.setSpawnPlace("home", "bed");
-		world.model.player.inventory.gold = GOLD_MARKER;
 		world.model.currentMaps.map = map;
-		return world;
+
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(bytes);
+		Savegames.FileHeader.writeToParcel(out, "Tester", "test", 0, false, false, "id", 0, false);
+		world.maps.writeToParcel(out, world);
+		return bytes.toByteArray();
 	}
 
 	private static WorldContext createWorld() {
@@ -151,26 +142,5 @@ public final class SavegameCorruptionTest {
 		PredefinedMap map = world.maps.findPredefinedMap(MAP);
 		assertNotNull(map);
 		return map;
-	}
-
-	private static byte[] save(WorldContext world) throws Exception {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		Savegames.saveWorld(world, out, "test");
-		return out.toByteArray();
-	}
-
-	private static byte[] intBytes(int value) {
-		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value };
-	}
-
-	private static int readInt(byte[] data, int offset) {
-		return ((data[offset] & 0xff) << 24) | ((data[offset + 1] & 0xff) << 16) | ((data[offset + 2] & 0xff) << 8) | (data[offset + 3] & 0xff);
-	}
-
-	private static int indexOf(byte[] data, byte[] pattern, int from) {
-		for (int i = from; i <= data.length - pattern.length; ++i) {
-			if (Arrays.equals(Arrays.copyOfRange(data, i, i + pattern.length), pattern)) return i;
-		}
-		throw new AssertionError("pattern not found: " + Arrays.toString(pattern));
 	}
 }
