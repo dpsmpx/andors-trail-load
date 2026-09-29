@@ -100,9 +100,12 @@ tasks.register('copyResValuesIn', Copy) {
     into "${projectDir}/build/gen-res/values-in/"
 }
 
-tasks.register('copyTranslation', Copy) {
+tasks.register('copyTranslation', Sync) { // Sync also removes stale files left by older builds
     description = "Copies the translation files to the modules translations folder"
     from "${rootDir}/assets/translation"
+    // Only the compiled .mo files are read at runtime (TranslationLoader). The .po/.pot sources
+    // are several times larger and must not end up in the APK.
+    include '*.mo'
     into "${projectDir}/build/gen-assets/translation"
 }
 
