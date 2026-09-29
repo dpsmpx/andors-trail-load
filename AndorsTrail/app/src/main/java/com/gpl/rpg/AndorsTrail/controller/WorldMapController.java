@@ -41,6 +41,7 @@ import com.gpl.rpg.AndorsTrail.util.Size;
 public final class WorldMapController {
 
 	private static final int WORLDMAP_SCREENSHOT_TILESIZE = 8;
+	// Increment when the generated world-map HTML format changes.
 	private static final int WORLDMAP_HTML_FORMAT_VERSION = 1;
 	private static final String WORLDMAP_HTML_VERSION_MARKER = "<!-- worldmap-format-version:" + WORLDMAP_HTML_FORMAT_VERSION + " -->";
 	public static final int WORLDMAP_DISPLAY_TILESIZE = WORLDMAP_SCREENSHOT_TILESIZE;
@@ -333,9 +334,9 @@ public final class WorldMapController {
 	}
 
 	private static void writeWorldMapPopulationVersion(File idFile) throws IOException {
-		PrintWriter pw = new PrintWriter(idFile);
-		pw.print(WORLDMAP_HTML_FORMAT_VERSION);
-		pw.close();
+		try (FileOutputStream fos = new FileOutputStream(idFile)) {
+			fos.write(Integer.toString(WORLDMAP_HTML_FORMAT_VERSION).getBytes("UTF-8"));
+		}
 	}
 
 	public static boolean displayWorldMap(Context context, WorldContext world) {
@@ -361,6 +362,7 @@ public final class WorldMapController {
 		if (!idFile.exists()) idFile.createNewFile();
 
 		Set<String> segmentsRequiringUpdate = new HashSet<String>();
+		Map<String, Boolean> worldMapHtmlStatus = new HashMap<String, Boolean>();
 
 		for (PredefinedMap map : world.maps.getAllMaps()) {
 			if (!map.visited) continue;
@@ -380,7 +382,12 @@ public final class WorldMapController {
 				updateCachedBitmap(context, map, renderer);
 			}
 
-			if (!isWorldMapHtmlCurrent(worldMapFile)) {
+			Boolean htmlCurrent = worldMapHtmlStatus.get(worldMapSegmentName);
+			if (htmlCurrent == null) {
+				htmlCurrent = isWorldMapHtmlCurrent(worldMapFile);
+				worldMapHtmlStatus.put(worldMapSegmentName, htmlCurrent);
+			}
+			if (!htmlCurrent) {
 				segmentsRequiringUpdate.add(worldMapSegmentName);
 			}
 		}
