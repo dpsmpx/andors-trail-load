@@ -261,8 +261,18 @@ public final class Savegames {
 		if (header.fileversion > AndorsTrailApplication.CURRENT_VERSION)
 			return LoadSavegameResult.savegameIsFromAFutureVersion;
 
-		world.maps.readFromParcel(src, world, controllers, header.fileversion);
-		world.model = new ModelContainer(src, world, controllers, header.fileversion);
+		boolean parsed = false;
+		try {
+			world.maps.readFromParcel(src, world, controllers, header.fileversion);
+			world.model = new ModelContainer(src, world, controllers, header.fileversion);
+			parsed = true;
+		} catch (RuntimeException e) {
+			// A damaged or modified file can hold values that the parsers do not expect.
+			throw new IOException("Savegame is damaged: " + e, e);
+		} finally {
+			// Do not keep map state from a file that failed to load; the next game would inherit it.
+			if (!parsed) world.resetForNewGame();
+		}
 		src.close();
 		if (header.fileversion >= 81) {
 			checkChecksum(world);

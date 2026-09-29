@@ -25,6 +25,7 @@ import com.gpl.rpg.AndorsTrail.util.HashMapHelper;
 public final class GameStatistics {
 	private boolean isAlteredSavegame = false;
 	private byte[] checksum = new byte[ChecksumBuilder.CHECKSUM_LENGTH];
+	private static final int MAX_CHECKSUM_LENGTH = 1024; // Longer than any digest.
 	private int deaths = 0;
 	private final HashMap<String, Integer> killedMonstersByTypeID = new HashMap<String, Integer>();
 	private final HashMap<String, Integer> killedMonstersByName = new HashMap<String, Integer>();
@@ -214,6 +215,8 @@ public final class GameStatistics {
 		if (fileversion < 81) return;
 		this.isAlteredSavegame = src.readBoolean();
 		final int checksumLength = src.readInt();
+		// Checked before allocating: a damaged file must not cause a huge allocation.
+		if (checksumLength < 0 || checksumLength > MAX_CHECKSUM_LENGTH) throw new IOException("Invalid checksum length " + checksumLength + ".");
 		this.checksum = new byte[checksumLength];
 		if( src.read(checksum) != checksumLength) throw new IOException("Failed to read full checksum.");
 	}

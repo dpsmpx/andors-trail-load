@@ -28,7 +28,9 @@ public final class ModelContainer {
 
 	public ModelContainer(DataInputStream src, WorldContext world, ControllerContext controllers, int fileversion) throws IOException {
 		this.player = Player.newFromParcel(src, world, controllers, fileversion);
-		this.currentMaps.map = world.maps.findPredefinedMap(src.readUTF());
+		final String currentMapName = src.readUTF();
+		this.currentMaps.map = world.maps.findPredefinedMap(currentMapName);
+		if (currentMaps.map == null) throw new IOException("Savegame contains unknown current map \"" + currentMapName + "\".");
 		this.uiSelections = new InterfaceData(src, fileversion);
 		if (uiSelections.selectedPosition != null) {
 			this.uiSelections.selectedMonster = currentMaps.map.getMonsterAt(uiSelections.selectedPosition);
