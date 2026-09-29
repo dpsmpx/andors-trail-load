@@ -9,40 +9,31 @@ public final class L {
 
 	public static void debug(String s) {
 		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			Log.d(TAG, s);
+			print(Log.DEBUG, s, null);
 		}
 	}
 
 	public static void info(String s) {
 		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			Log.i(TAG, s);
+			print(Log.INFO, s, null);
 		}
 	}
 
 	public static void warn(String s) {
 		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			Log.w(TAG, s);
+			print(Log.WARN, s, null);
 		}
 	}
 
 	public static void error(String s) {
 		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			try {
-				Log.e(TAG, s);
-			} catch (RuntimeException e) {
-				System.err.println(TAG + " ERROR: " + s);
-			}
+			print(Log.ERROR, s, null);
 		}
 	}
 
 	public static void error(String s, Throwable t) {
 		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			try {
-				Log.e(TAG, s, t);
-			} catch (RuntimeException e) {
-				System.err.println(TAG + " ERROR: " + s);
-				t.printStackTrace(System.err);
-			}
+			print(Log.ERROR, s, t);
 		}
 	}
 
@@ -50,4 +41,13 @@ public final class L {
 		warn(s);
 	}
 
+	private static void print(int priority, String s, Throwable t) {
+		try {
+			Log.println(priority, TAG, t == null ? s : s + '\n' + Log.getStackTraceString(t));
+		} catch (RuntimeException e) {
+			// android.util.Log is not available in JVM unit tests.
+			System.err.println(TAG + ": " + s);
+			if (t != null) t.printStackTrace(System.err);
+		}
+	}
 }

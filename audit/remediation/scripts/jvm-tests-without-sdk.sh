@@ -83,7 +83,7 @@ echo "package androidx.activity; public class OnBackPressedDispatcher { public v
 # android.jar stubs throw RuntimeException("Stub!"), while android-all's Log is native. Mimic the stub,
 # because the code relies on catching that RuntimeException (util/L.java).
 mkdir -p "$WORK/stubs/android/util"
-echo 'package android.util; public final class Log { static int stub() { throw new RuntimeException("Stub!"); } public static int d(String t, String m) { return stub(); } public static int i(String t, String m) { return stub(); } public static int w(String t, String m) { return stub(); } public static int w(String t, String m, Throwable e) { return stub(); } public static int e(String t, String m) { return stub(); } public static int e(String t, String m, Throwable e) { return stub(); } }' > "$WORK/stubs/android/util/Log.java"
+echo 'package android.util; public final class Log { static int stub() { throw new RuntimeException("Stub!"); } public static int d(String t, String m) { return stub(); } public static int i(String t, String m) { return stub(); } public static int w(String t, String m) { return stub(); } public static int w(String t, String m, Throwable e) { return stub(); } public static int e(String t, String m) { return stub(); } public static int e(String t, String m, Throwable e) { return stub(); } public static int println(int p, String t, String m) { return stub(); } public static String getStackTraceString(Throwable e) { stub(); return null; } public static final int DEBUG = 3, INFO = 4, WARN = 5, ERROR = 6; }' > "$WORK/stubs/android/util/Log.java"
 mkdir -p "$WORK/framework-overrides"
 javac --release 21 -nowarn -d "$WORK/framework-overrides" "$WORK/stubs/android/util/Log.java"
 CP="$WORK/framework-overrides:$CP"
