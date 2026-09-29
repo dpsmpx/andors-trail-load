@@ -657,7 +657,7 @@ public final class LoadSaveActivity extends AndorsTrailBaseActivity implements O
             return;
         }
         String chosenZipName = chosenZip.getName();
-        if (!chosenZipName.startsWith(Constants.FILENAME_WORLDMAP_DIRECTORY)) {
+        if (chosenZipName == null || !chosenZipName.startsWith(Constants.FILENAME_WORLDMAP_DIRECTORY)) {
             showErrorImportingWorldmapWrongDirectory();
             return;
         }

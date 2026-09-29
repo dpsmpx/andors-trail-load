@@ -229,9 +229,14 @@ public final class AndroidStorage {
     private static void unzipStreamToDirectory(File targetDirectory,
                                                boolean overwriteNotSkip,
                                                ZipInputStream zis) throws IOException {
+        String targetPath = targetDirectory.getCanonicalPath() + File.separator;
         ZipEntry entry;
         while ((entry = zis.getNextEntry()) != null) {
             File file = new File(targetDirectory, entry.getName());
+            // Reject names such as "../savegame1" that would write outside the target ("Zip Slip").
+            if (!file.getCanonicalPath().startsWith(targetPath)) {
+                throw new IOException("ZIP entry outside of the target directory: " + entry.getName());
+            }
 
             if (entry.isDirectory()) {
                 file.mkdirs();
