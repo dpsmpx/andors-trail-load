@@ -35,69 +35,69 @@ img { z-index:1; position:absolute; }
 var player = document.getElementById(\"playerPosition\");
 var params = window.location.search.substring(1);
 if (params) {
-\tvar pos = params.split(\",");
-\tvar x = parseInt(pos[0])-({{offsetx}});
-\tvar y = parseInt(pos[1])-({{offsety}});
-\tplayer.style.top = y + \"px\";
-\tplayer.style.left = x + \"px\";
+	var pos = params.split(\",");
+	var x = parseInt(pos[0])-({{offsetx}});
+	var y = parseInt(pos[1])-({{offsety}});
+	player.style.top = y + \"px\";
+	player.style.left = x + \"px\";
 } else {
-\tplayer.style.display = \"none\";
+	player.style.display = \"none\";
 }
 
 (function() {
-\tvar preloadMargin = 768;
-\tvar images = document.querySelectorAll(\"img[data-src]\");
+	var preloadMargin = 768;
+	var images = document.querySelectorAll(\"img[data-src]\");
 
-\tfunction loadImage(image) {
-\t\tvar src = image.getAttribute(\"data-src\");
-\t\tif (!src) return;
-\t\timage.setAttribute(\"src\", src);
-\t\timage.removeAttribute(\"data-src\");
-\t}
+	function loadImage(image) {
+		var src = image.getAttribute(\"data-src\");
+		if (!src) return;
+		image.setAttribute(\"src\", src);
+		image.removeAttribute(\"data-src\");
+	}
 
-\tif (\"IntersectionObserver\" in window) {
-\t\tvar observer = new IntersectionObserver(function(entries) {
-\t\t\tfor (var i = 0; i < entries.length; ++i) {
-\t\t\t\tif (entries[i].isIntersecting || entries[i].intersectionRatio > 0) {
-\t\t\t\t\tloadImage(entries[i].target);
-\t\t\t\t\tobserver.unobserve(entries[i].target);
-\t\t\t\t}
-\t\t\t}
-\t\t}, { rootMargin: preloadMargin + \"px\" });
+	if (\"IntersectionObserver\" in window) {
+		var observer = new IntersectionObserver(function(entries) {
+			for (var i = 0; i < entries.length; ++i) {
+				if (entries[i].isIntersecting || entries[i].intersectionRatio > 0) {
+					loadImage(entries[i].target);
+					observer.unobserve(entries[i].target);
+				}
+			}
+		}, { rootMargin: preloadMargin + \"px\" });
 
-\t\tfor (var i = 0; i < images.length; ++i) {
-\t\t\tobserver.observe(images[i]);
-\t\t}
-\t} else {
-\t\tvar loadScheduled = false;
+		for (var i = 0; i < images.length; ++i) {
+			observer.observe(images[i]);
+		}
+	} else {
+		var loadScheduled = false;
 
-\t\tfunction loadVisibleImages() {
-\t\t\tloadScheduled = false;
-\t\t\tvar viewportWidth = document.documentElement.clientWidth || window.innerWidth;
-\t\t\tvar viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+		function loadVisibleImages() {
+			loadScheduled = false;
+			var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+			var viewportHeight = document.documentElement.clientHeight || window.innerHeight;
 
-\t\t\tfor (var i = 0; i < images.length; ++i) {
-\t\t\t\tif (!images[i].getAttribute(\"data-src\")) continue;
-\t\t\t\tvar rect = images[i].getBoundingClientRect();
-\t\t\t\tif (rect.bottom >= -preloadMargin &&
-\t\t\t\t\trect.right >= -preloadMargin &&
-\t\t\t\t\trect.top <= viewportHeight + preloadMargin &&
-\t\t\t\t\trect.left <= viewportWidth + preloadMargin) {
-\t\t\t\t\tloadImage(images[i]);
-\t\t\t\t}
-\t\t\t}
-\t\t}
+			for (var i = 0; i < images.length; ++i) {
+				if (!images[i].getAttribute(\"data-src\")) continue;
+				var rect = images[i].getBoundingClientRect();
+				if (rect.bottom >= -preloadMargin &&
+					rect.right >= -preloadMargin &&
+					rect.top <= viewportHeight + preloadMargin &&
+					rect.left <= viewportWidth + preloadMargin) {
+					loadImage(images[i]);
+				}
+			}
+		}
 
-\t\tfunction scheduleLoad() {
-\t\t\tif (loadScheduled) return;
-\t\t\tloadScheduled = true;
-\t\t\twindow.setTimeout(loadVisibleImages, 50);
-\t\t}
+		function scheduleLoad() {
+			if (loadScheduled) return;
+			loadScheduled = true;
+			window.setTimeout(loadVisibleImages, 50);
+		}
 
-\t\twindow.addEventListener(\"scroll\", scheduleLoad, false);
-\t\twindow.addEventListener(\"resize\", scheduleLoad, false);
-\t\tscheduleLoad();
-\t}
+		window.addEventListener(\"scroll\", scheduleLoad, false);
+		window.addEventListener(\"resize\", scheduleLoad, false);
+		scheduleLoad();
+	}
 })();
 </script>
 
