@@ -9,8 +9,9 @@
 # - The Android framework comes from Robolectric's android-all jar (Maven Central) instead
 #   of the SDK's android.jar stubs. Tests must not call Android framework methods either way.
 # - R and BuildConfig are generated stubs whose values are not the real resource ids.
-# - UI sources (activity/, view/, Dialogs) and sources using AndroidX classes are only read for
-#   their signatures and never compiled, so tests cannot load those classes.
+# - UI sources (activity/, view/, Dialogs) and sources using AndroidX fragments or activities are
+#   only read for their signatures and never compiled, so tests cannot load those classes. The
+#   other AndroidX classes are stubs that do nothing.
 # - Java 21 is required: the app calls Math.clamp, which Android provides from API 35 on.
 #
 # Usage: audit/remediation/scripts/jvm-tests-without-sdk.sh [work-dir]
@@ -71,7 +72,7 @@ mkdir -p "$WORK/stubs/androidx/annotation" "$WORK/stubs/androidx/documentfile/pr
 for a in NonNull Nullable RequiresApi IdRes LayoutRes StringRes DrawableRes ColorInt; do
 	echo "package androidx.annotation; public @interface $a { int value() default 0; int api() default 0; }" > "$WORK/stubs/androidx/annotation/$a.java"
 done
-echo "package androidx.documentfile.provider; public class DocumentFile {}" > "$WORK/stubs/androidx/documentfile/provider/DocumentFile.java"
+echo "package androidx.documentfile.provider; public abstract class DocumentFile { public static DocumentFile fromFile(java.io.File f) { return null; } public abstract DocumentFile createFile(String mimeType, String name); public abstract DocumentFile findFile(String name); public abstract DocumentFile[] listFiles(); public abstract android.net.Uri getUri(); public abstract String getName(); public abstract boolean isDirectory(); public abstract boolean isFile(); public abstract boolean exists(); public abstract boolean delete(); }" > "$WORK/stubs/androidx/documentfile/provider/DocumentFile.java"
 echo "package androidx.core.content; public class FileProvider { public static android.net.Uri getUriForFile(android.content.Context c, String a, java.io.File f) { return null; } }" > "$WORK/stubs/androidx/core/content/FileProvider.java"
 echo "package androidx.fragment.app; public class Fragment {}" > "$WORK/stubs/androidx/fragment/app/Fragment.java"
 echo "package androidx.fragment.app; public class FragmentActivity extends android.app.Activity { public androidx.activity.OnBackPressedDispatcher getOnBackPressedDispatcher() { return null; } public FragmentManager getSupportFragmentManager() { return null; } }" > "$WORK/stubs/androidx/fragment/app/FragmentActivity.java"
@@ -90,7 +91,7 @@ CP="$WORK/framework-overrides:$CP"
 
 # Compile every main source that does not import AndroidX; the rest is only used for signatures.
 MAIN_SOURCES="$WORK/main-sources.txt"
-(cd "$APP/src/main/java" && grep -rLE "import androidx\.(fragment|activity|documentfile|core)" --include=*.java . | grep -v -e "/activity/" -e "/view/" -e "/Dialogs.java" | sed "s|^\.|$APP/src/main/java|") > "$MAIN_SOURCES"
+(cd "$APP/src/main/java" && grep -rLE "import androidx\.(fragment|activity)" --include=*.java . | grep -v -e "/activity/" -e "/view/" -e "/Dialogs.java" | sed "s|^\.|$APP/src/main/java|") > "$MAIN_SOURCES"
 rm -rf "$WORK/classes" "$WORK/test-classes" && mkdir -p "$WORK/classes" "$WORK/test-classes"
 javac --release 21 -proc:none -implicit:none -nowarn -encoding UTF-8 -d "$WORK/classes" -cp "$CP" \
 	-sourcepath "$APP/src/main/java:$WORK/stubs" "@$MAIN_SOURCES" "$PKG_DIR/R.java" "$PKG_DIR/BuildConfig.java" 2>&1 | grep -v "^Note:" || true
