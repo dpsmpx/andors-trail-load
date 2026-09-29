@@ -77,6 +77,8 @@ public final class StartScreenActivity extends AndorsTrailBaseFragmentActivity i
 			getSupportFragmentManager().addOnBackStackChangedListener(this);
 			getOnBackPressedDispatcher().addCallback(this, backPressedCallback);
 		}
+		// androidx.activity 1.0.0 does not forward the Android 16 system Back to its dispatcher.
+		BackNavigation.register(this, () -> getOnBackPressedDispatcher().onBackPressed());
 		
 		
 		

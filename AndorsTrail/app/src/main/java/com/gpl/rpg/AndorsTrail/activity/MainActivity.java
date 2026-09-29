@@ -91,6 +91,7 @@ public final class MainActivity
 		if (!app.isInitialized()) { finish(); return; }
 		this.world = app.getWorld();
 		this.controllers = app.getControllerContext();
+		BackNavigation.register(this, this::onBackPressed);
 
 		initializeView(this, R.layout.main, R.id.main_container);
 
