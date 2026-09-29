@@ -30,7 +30,9 @@ jobs:
         run: cd AndorsTrail && ./gradlew testDebugUnitTest assembleDebug
 
       - name: APK report
-        run: bash audit/remediation/scripts/apk-report.sh AndorsTrail/app/build/outputs/apk/debug/*.apk | tee -a "$GITHUB_STEP_SUMMARY"
+        run: |
+          set -o pipefail
+          bash audit/remediation/scripts/apk-report.sh AndorsTrail/app/build/outputs/apk/debug/*.apk | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload APK
         uses: actions/upload-artifact@v5

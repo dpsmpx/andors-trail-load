@@ -7,7 +7,7 @@
 # (translation sources) or calls Java APIs that are missing on the app's minimum API level.
 set -euo pipefail
 
-APK="$1"
+APK="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 CHECK="${2:-}"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
@@ -16,7 +16,7 @@ python3 - "$APK" > "$WORK/report.md" <<'EOF'
 import collections, os, sys, zipfile
 apk = sys.argv[1]
 z = zipfile.ZipFile(apk)
-entries = z.infolist()
+entries = [e for e in z.infolist() if not e.filename.endswith('/')]
 print(f'### APK report: `{os.path.basename(apk)}`\n')
 print(f'- File size: **{os.path.getsize(apk):,} bytes** ({os.path.getsize(apk) / 1e6:.1f} MB)')
 print(f'- Entries: {len(entries):,}')
