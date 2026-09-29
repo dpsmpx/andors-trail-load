@@ -24,6 +24,7 @@ import com.gpl.rpg.AndorsTrail.model.actor.Player;
 import com.gpl.rpg.AndorsTrail.model.conversation.ConversationCollection;
 import com.gpl.rpg.AndorsTrail.model.conversation.Phrase;
 import com.gpl.rpg.AndorsTrail.model.conversation.Reply;
+import com.gpl.rpg.AndorsTrail.model.item.DropList;
 import com.gpl.rpg.AndorsTrail.model.item.ItemFilter;
 import com.gpl.rpg.AndorsTrail.model.item.ItemType;
 import com.gpl.rpg.AndorsTrail.model.item.ItemTypeCollection;
@@ -92,7 +93,8 @@ public final class ConversationController {
 		return result;
 	}
 
-	private void applyScriptEffect(Resources res, Player player, ScriptEffect effect, ScriptEffectResult result) {
+	// Package-private for ConversationControllerContentErrorsTest.
+	void applyScriptEffect(Resources res, Player player, ScriptEffect effect, ScriptEffectResult result) {
 		switch (effect.type) {
 			case actorCondition:
 				addActorConditionReward(player, effect.effectID, effect.value, result);
@@ -101,7 +103,8 @@ public final class ConversationController {
 				addActorConditionImmunityReward(player, effect.effectID, effect.value, result);
 				break;
 			case skillIncrease:
-				addSkillReward(player, SkillCollection.SkillID.valueOf(effect.effectID), result);
+				SkillCollection.SkillID skillID = findSkillID(effect.effectID);
+				if (skillID != null) addSkillReward(player, skillID, result);
 				break;
 			case dropList:
 				addDropListReward(player, effect.effectID, result);
@@ -180,6 +183,7 @@ public final class ConversationController {
 
 	private void changeMapFilter(Resources res, String mapName, String effectID) {
 		PredefinedMap map = findMapForScriptEffect(mapName);
+		if (map == null) return;
 		map.currentColorFilter = effectID;
 		if (world.model.currentMaps.map == map) {
 			controllers.mapController.applyCurrentMapReplacements(res, true);
@@ -188,21 +192,41 @@ public final class ConversationController {
 	
 	private void deactivateMapObjectGroup(String mapName, String mapObjectGroupID) {
 		PredefinedMap map = findMapForScriptEffect(mapName);
+		if (map == null) return;
 		controllers.mapController.deactivateMapObjectGroup(map, mapObjectGroupID);
 	}
 
 	private PredefinedMap findMapForScriptEffect(String mapName) {
 		if (mapName == null) return world.model.currentMaps.map;
-		return world.maps.findPredefinedMap(mapName);
+		PredefinedMap map = world.maps.findPredefinedMap(mapName);
+		if (map == null) reportContentError("Script effect refers to unknown map " + mapName);
+		return map;
+	}
+
+	private static SkillCollection.SkillID findSkillID(String skillID) {
+		if (skillID != null) {
+			for (SkillCollection.SkillID id : SkillCollection.SkillID.values()) {
+				if (id.name().equals(skillID)) return id;
+			}
+		}
+		reportContentError("Unknown skill " + skillID);
+		return null;
+	}
+
+	// Content errors must not crash the game; they are logged and the effect or requirement is ignored.
+	private static void reportContentError(String message) {
+		L.error("Content error: " + message);
 	}
 
 	private void activateMapObjectGroup(String mapName, String mapObjectGroupID) {
 		PredefinedMap map = findMapForScriptEffect(mapName);
+		if (map == null) return;
 		controllers.mapController.activateMapObjectGroup(map, mapObjectGroupID);
 	}
 
 	private void spawnAll(String mapName, String areaId) {
 		PredefinedMap map = findMapForScriptEffect(mapName);
+		if (map == null) return;
 		LayeredTileMap tileMap = null;
 		if (map == world.model.currentMaps.map) {
 			tileMap = world.model.currentMaps.tileMap;
@@ -216,6 +240,7 @@ public final class ConversationController {
 
 	private void deactivateSpawnArea(String mapName, String areaID, boolean removeAllMonsters) {
 		PredefinedMap map = findMapForScriptEffect(mapName);
+		if (map == null) return;
 		for (MonsterSpawnArea area : map.spawnAreas) {
 			if (!area.areaID.equals(areaID)) continue;
 			controllers.monsterSpawnController.deactivateSpawnArea(area, removeAllMonsters);
@@ -224,7 +249,6 @@ public final class ConversationController {
 	}
 
 	private void mapchange(String mapName, String place) {
-		PredefinedMap map = findMapForScriptEffect(mapName);
 //		controllers.mapController.activateMapObjectGroup(map, mapObjectGroupID);
 //		controllerContext.movementController.placePlayerAsyncAt(MapObject.MapObjectType.newmap, effect.mapName, effect.effectID, 0, 0); //cbcbcb check
 		controllers.movementController.placePlayerAsyncAt(MapObject.MapObjectType.newmap, mapName, place, 0, 0);
@@ -323,16 +347,27 @@ public final class ConversationController {
 	}
 
 	private void addDropListReward(Player player, String droplistID, ScriptEffectResult result) {
-		world.dropLists.getDropList(droplistID).createRandomLoot(result.loot, player);
+		DropList dropList = world.dropLists.getDropList(droplistID);
+		if (dropList == null) {
+			reportContentError("Unknown droplist " + droplistID);
+			return;
+		}
+		dropList.createRandomLoot(result.loot, player);
 	}
 
 	private void addItemReward(String itemTypeID, int quantity, ScriptEffectResult result) {
+		ItemType itemType;
 		if (ItemTypeCollection.isItemFilter(itemTypeID)) {
 			ItemFilter filter = world.itemFilters.getItemFilter(itemTypeID);
-			result.loot.add(filter.getRandomItem(), quantity);
+			itemType = filter == null ? null : filter.getRandomItem();
 		} else {
-			result.loot.add(world.itemTypes.getItemType(itemTypeID), quantity);
+			itemType = world.itemTypes.getItemType(itemTypeID);
 		}
+		if (itemType == null) {
+			reportContentError("Unknown item or item filter " + itemTypeID);
+			return;
+		}
+		result.loot.add(itemType, quantity);
 	}
 
 	private void addSkillReward(Player player, SkillCollection.SkillID skillID, ScriptEffectResult result) {
@@ -353,6 +388,10 @@ public final class ConversationController {
 		}
 
 		ActorConditionType conditionType = world.actorConditionsTypes.getActorConditionType(conditionTypeID);
+		if (conditionType == null) {
+			reportContentError("Unknown actor condition " + conditionTypeID);
+			return;
+		}
 		ActorConditionEffect e = new ActorConditionEffect(conditionType, magnitude, duration, always);
 		controllers.actorStatsController.applyActorCondition(player, e);
 		result.actorConditions.add(e);
@@ -363,6 +402,10 @@ public final class ConversationController {
 		int magnitude = ActorCondition.MAGNITUDE_REMOVE_ALL;
 
 		ActorConditionType conditionType = world.actorConditionsTypes.getActorConditionType(conditionTypeID);
+		if (conditionType == null) {
+			reportContentError("Unknown actor condition " + conditionTypeID);
+			return;
+		}
 		ActorConditionEffect e = new ActorConditionEffect(conditionType, magnitude, duration, always);
 		controllers.actorStatsController.applyActorCondition(player, e);
 		result.actorConditions.add(e);
@@ -433,7 +476,8 @@ public final class ConversationController {
 				}
 				break;
 			case skillLevel:
-				result =  player.getSkillLevel(SkillCollection.SkillID.valueOf(requirement.requireID)) >= requirement.value;
+				SkillCollection.SkillID requiredSkill = findSkillID(requirement.requireID);
+				result = requiredSkill != null && player.getSkillLevel(requiredSkill) >= requirement.value;
 				break;
 			case killedMonster:
 				result =  stats.getNumberOfKillsForMonsterType(requirement.requireID) >= requirement.value;
@@ -492,8 +536,8 @@ public final class ConversationController {
 				}else{
 					levels = requirement.value;
 				}
-				SkillInfo skill = world.skills.getSkill(SkillCollection.SkillID.valueOf(requirement.requireID));
-				result =  canLevelupSkillWithQuest(player, skill, levels);
+				SkillCollection.SkillID skillToIncrease = findSkillID(requirement.requireID);
+				result = skillToIncrease != null && canLevelupSkillWithQuest(player, world.skills.getSkill(skillToIncrease), levels);
 				break;
 			default:
 				result =  true;
@@ -605,16 +649,22 @@ public final class ConversationController {
 			void onConversationHasReply(Reply r, String message);
 		}
 
-		private void setCurrentPhrase(final Resources res, String phraseID) {
+		// Returns false when the phrase does not exist.
+		private boolean setCurrentPhrase(final Resources res, String phraseID) {
 			this.currentPhraseID = phraseID;
 			this.currentPhrase = world.conversationLoader.loadPhrase(phraseID, conversationCollection, res);
 			if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
 				L.log("Phrase_trace: " + phraseID);
 				if (currentPhrase == null) currentPhrase = new Phrase("(phrase \"" + phraseID + "\" not implemented yet)", null, null, null);
 			}
+			if (currentPhrase == null) {
+				reportContentError("Unknown phrase " + phraseID);
+				return false;
+			}
 			if (this.currentPhrase.switchToNPC != null) {
 				setCurrentNPC(world.model.currentMaps.map.findSpawnedMonster(this.currentPhrase.switchToNPC));
 			}
+			return true;
 		}
 
 		public void proceedToPhrase(final Resources res, String phraseID, boolean applyScriptEffects, boolean displayPhraseMessage) {
@@ -638,7 +688,10 @@ public final class ConversationController {
 				return null;
 			}
 
-			setCurrentPhrase(res, phraseID);
+			if (!setCurrentPhrase(res, phraseID)) {
+				listener.onConversationEnded();
+				return null;
+			}
 
 			if (applyScriptEffects) {
 				ScriptEffectResult scriptEffectResult = controllers.conversationController.applyScriptEffectsForPhrase(res, player, currentPhrase);

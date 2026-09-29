@@ -21,9 +21,11 @@ public final class ConversationLoader {
 			return conversationCollection.getPhrase(phraseID);
 		}
 
+		Integer resourceID = resourceIDsPerPhraseID.get(phraseID);
+		if (resourceID == null) return null; // The content refers to a phrase that does not exist.
+
 		TranslationLoader translationLoader = new TranslationLoader(r.getAssets(), r);
 		ConversationListParser conversationListParser = new ConversationListParser(translationLoader);
-		int resourceID = resourceIDsPerPhraseID.get(phraseID);
 		conversationCollection.initialize(conversationListParser, ResourceLoader.readStringFromRaw(r, resourceID));
 		translationLoader.close();
 
