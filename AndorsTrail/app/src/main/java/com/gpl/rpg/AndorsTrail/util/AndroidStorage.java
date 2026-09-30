@@ -134,30 +134,35 @@ public final class AndroidStorage {
             try {
                 workerCallback.onInitialize();
 
-                //region create zip file
                 File zip = File.createTempFile("temp_worldmap", ".zip");
-                try (OutputStream out = new FileOutputStream(zip)) {
-                    ZipOutputStream zipOut = new ZipOutputStream(out);
-                    for (int i = 0; i < files.length; i++) {
-                        File file = files[i];
-                        try (FileInputStream fis = new FileInputStream(file)) {
-                            workerCallback.onProgress((float) i / files.length);
-                            zipOut.putNextEntry(new ZipEntry(file.getName()));
-                            copyStream(fis, zipOut);
-                            zipOut.closeEntry();
+                try {
+                    //region create zip file
+                    try (OutputStream out = new FileOutputStream(zip)) {
+                        ZipOutputStream zipOut = new ZipOutputStream(out);
+                        for (int i = 0; i < files.length; i++) {
+                            File file = files[i];
+                            try (FileInputStream fis = new FileInputStream(file)) {
+                                workerCallback.onProgress((float) i / files.length);
+                                zipOut.putNextEntry(new ZipEntry(file.getName()));
+                                copyStream(fis, zipOut);
+                                zipOut.closeEntry();
+                            }
                         }
+                        zipOut.close();
                     }
-                    zipOut.close();
-                }
-                //endregion
+                    //endregion
 
-                DocumentFile worldmapZip = DocumentFile.fromFile(zip);
-                DocumentFile worldmapTarget = targetDirectory.createFile("application/zip", fileName);
-                if (worldmapTarget != null && worldmapTarget.exists()) {
-                    AndroidStorage.copyDocumentFile(worldmapZip, resolver, worldmapTarget);
-                    workerCallback.onComplete(true);
-                } else {
-                    throw new FileNotFoundException("Could not create File");
+                    DocumentFile worldmapZip = DocumentFile.fromFile(zip);
+                    DocumentFile worldmapTarget = targetDirectory.createFile("application/zip", fileName);
+                    if (worldmapTarget != null && worldmapTarget.exists()) {
+                        AndroidStorage.copyDocumentFile(worldmapZip, resolver, worldmapTarget);
+                        workerCallback.onComplete(true);
+                    } else {
+                        throw new FileNotFoundException("Could not create File");
+                    }
+                } finally {
+                    //noinspection ResultOfMethodCallIgnored
+                    zip.delete();
                 }
             } catch (NullPointerException e) {
                 if (worker.isCancelled()) {
@@ -221,7 +226,9 @@ public final class AndroidStorage {
                                                     ContentResolver resolver,
                                                     File targetDirectory,
                                                     boolean overwriteNotSkip) throws IOException {
-        try (ZipInputStream zis = new ZipInputStream(resolver.openInputStream(zipFile.getUri()))) {
+        InputStream in = resolver.openInputStream(zipFile.getUri());
+        if (in == null) throw new IOException("Cannot open " + zipFile.getUri());
+        try (ZipInputStream zis = new ZipInputStream(in)) {
             unzipStreamToDirectory(targetDirectory, overwriteNotSkip, zis);
         }
     }
@@ -284,6 +291,10 @@ public final class AndroidStorage {
                                         DocumentFile targetFile) throws IOException {
         try (OutputStream outputStream = resolver.openOutputStream(targetFile.getUri());
              InputStream inputStream = resolver.openInputStream(sourceFile.getUri())) {
+            // ContentResolver returns null when the provider crashed.
+            if (outputStream == null || inputStream == null) {
+                throw new IOException("Cannot open " + sourceFile.getUri() + " or " + targetFile.getUri());
+            }
             copyStream(inputStream, outputStream);
         }
     }
@@ -361,7 +372,8 @@ public final class AndroidStorage {
             } catch (NullPointerException e) {
                 if (worker.isCancelled()) {
                     workerCallback.onFailure(new CancellationException("Cancelled"));
-                    return;
+                } else {
+                    workerCallback.onFailure(e);
                 }
             } catch (Exception e) {
                 workerCallback.onFailure(e);
@@ -404,6 +416,8 @@ public final class AndroidStorage {
             } catch (NullPointerException e) {
                 if (worker.isCancelled()) {
                     workerCallback.onFailure(new CancellationException("Cancelled"));
+                } else {
+                    workerCallback.onFailure(e);
                 }
             } catch (Exception e) {
                 workerCallback.onFailure(e);
@@ -448,6 +462,7 @@ public final class AndroidStorage {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onFailure(Exception e) {
+                if (!(e instanceof CancellationException)) L.error("Import or export failed", e);
                 this.onComplete(false);
             }
 
@@ -579,47 +594,49 @@ public final class AndroidStorage {
 
                 // Build zip into a temp file
                 File zip = File.createTempFile("temp_worldmap", ".zip");
-                try (FileOutputStream fos = new FileOutputStream(zip);
-                     ZipOutputStream zipOut = new ZipOutputStream(fos)) {
-                    for (int i = 0; files != null && i < files.length; i++) {
-                        File file = files[i];
-                        if (file == null) continue;
-                        try (FileInputStream fis = new FileInputStream(file)) {
-                            workerCallback.onProgress((float) (i + 1) / files.length);
-                            zipOut.putNextEntry(new ZipEntry(file.getName()));
-                            copyStream(fis, zipOut);
-                            zipOut.closeEntry();
+                try {
+                    try (FileOutputStream fos = new FileOutputStream(zip);
+                         ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+                        for (int i = 0; files != null && i < files.length; i++) {
+                            File file = files[i];
+                            if (file == null) continue;
+                            try (FileInputStream fis = new FileInputStream(file)) {
+                                workerCallback.onProgress((float) (i + 1) / files.length);
+                                zipOut.putNextEntry(new ZipEntry(file.getName()));
+                                copyStream(fis, zipOut);
+                                zipOut.closeEntry();
+                            }
                         }
                     }
-                }
 
-                // Insert zip into MediaStore Downloads
-                deleteMediaStoreEntry(resolver, collection, relPath, displayName);
+                    // Insert zip into MediaStore Downloads
+                    deleteMediaStoreEntry(resolver, collection, relPath, displayName);
 
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Downloads.DISPLAY_NAME, displayName);
-                values.put(MediaStore.Downloads.MIME_TYPE, "application/zip");
-                values.put(MediaStore.Downloads.RELATIVE_PATH, relPath);
-                values.put(MediaStore.Downloads.IS_PENDING, 1);
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Downloads.DISPLAY_NAME, displayName);
+                    values.put(MediaStore.Downloads.MIME_TYPE, "application/zip");
+                    values.put(MediaStore.Downloads.RELATIVE_PATH, relPath);
+                    values.put(MediaStore.Downloads.IS_PENDING, 1);
 
-                Uri itemUri = resolver.insert(collection, values);
-                if (itemUri == null) throw new IOException("MediaStore insert failed for " + displayName);
+                    Uri itemUri = resolver.insert(collection, values);
+                    if (itemUri == null) throw new IOException("MediaStore insert failed for " + displayName);
 
-                try {
-                    try (OutputStream out = resolver.openOutputStream(itemUri);
-                         FileInputStream in = new FileInputStream(zip)) {
-                        if (out == null) throw new IOException("MediaStore openOutputStream returned null for " + itemUri);
-                        copyStream(in, out);
+                    try {
+                        try (OutputStream out = resolver.openOutputStream(itemUri);
+                             FileInputStream in = new FileInputStream(zip)) {
+                            if (out == null) throw new IOException("MediaStore openOutputStream returned null for " + itemUri);
+                            copyStream(in, out);
+                        }
+
+                        values.clear();
+                        values.put(MediaStore.Downloads.IS_PENDING, 0);
+                        resolver.update(itemUri, values, null, null);
+
+                        workerCallback.onComplete(true);
+                    } catch (Exception e) {
+                        resolver.delete(itemUri, null, null);
+                        throw e;
                     }
-
-                    values.clear();
-                    values.put(MediaStore.Downloads.IS_PENDING, 0);
-                    resolver.update(itemUri, values, null, null);
-
-                    workerCallback.onComplete(true);
-                } catch (Exception e) {
-                    resolver.delete(itemUri, null, null);
-                    throw e;
                 } finally {
                     // Best-effort cleanup of the temp file
                     //noinspection ResultOfMethodCallIgnored
