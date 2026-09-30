@@ -9,8 +9,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.security.DigestException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,7 +111,7 @@ public final class Savegames {
 				result = loadWorld(androidContext.getResources(), world, controllers, androidContext, fos, fh);
 			} catch (IOException | DigestException e) {
 				lastLoadFailureMessage = e.getMessage() != null ? e.getMessage() : e.toString();
-				debugLoadFailure("Savegames.loadWorld(slot=" + slot + "): scene cannot be loaded from " + fh.describe() + ".", e);
+				L.error("Savegames.loadWorld(slot=" + slot + "): scene cannot be loaded from " + fh.describe() + ".", e);
 				return LoadSavegameResult.unknownError;
 			} finally {
 				fos.close();
@@ -136,22 +134,13 @@ public final class Savegames {
 			return result;
 		} catch (IOException e) {
 			lastLoadFailureMessage = e.getMessage() != null ? e.getMessage() : e.toString();
-			debugLoadFailure("Savegames.loadWorld(slot=" + slot + "): save file cannot be loaded." , e);
+			L.error("Savegames.loadWorld(slot=" + slot + "): save file cannot be loaded." , e);
 			return LoadSavegameResult.unknownError;
 		}
 	}
 
 	public static String getLastLoadFailureMessage() {
 		return lastLoadFailureMessage;
-	}
-
-	private static void debugLoadFailure(String message, Throwable e) {
-		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			L.warn(message + " " + e + "\n" + sw);
-		}
 	}
 
 	private static boolean triedToCheat(Context androidContext, FileHeader fh) throws IOException {
@@ -304,10 +293,8 @@ public final class Savegames {
 
 	public static FileHeader quickload(Context androidContext, int slot) {
 		try {
-			if (slot != SLOT_QUICKSAVE) {
-				File f = getSlotFile(slot, androidContext);
-				if (!f.exists()) return null;
-			}
+			File f = slot == SLOT_QUICKSAVE ? androidContext.getFileStreamPath(Constants.FILENAME_SAVEGAME_QUICKSAVE) : getSlotFile(slot, androidContext);
+			if (!f.exists()) return null;
 			FileInputStream fos = getInputFile(androidContext, slot);
 			DataInputStream src = new DataInputStream(fos);
 			final FileHeader header = new FileHeader(src, false);
@@ -316,7 +303,7 @@ public final class Savegames {
 			return header;
 		} catch (Exception e) {
 			lastLoadFailureMessage = e.getMessage() != null ? e.getMessage() : e.toString();
-			debugLoadFailure("Savegames.quickload(slot=" + slot + "): save file cannot be loaded." , e);
+			L.error("Savegames.quickload(slot=" + slot + "): save file cannot be loaded." , e);
 			return null;
 		}
 	}

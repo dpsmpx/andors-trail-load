@@ -25,16 +25,13 @@ public final class L {
 		}
 	}
 
+	// Errors are logged in release builds too: the app has no other error reporting.
 	public static void error(String s) {
-		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			print(Log.ERROR, s, null);
-		}
+		print(Log.ERROR, s, null);
 	}
 
 	public static void error(String s, Throwable t) {
-		if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) {
-			print(Log.ERROR, s, t);
-		}
+		print(Log.ERROR, s, t);
 	}
 
 	public static void log(String s) {
