@@ -30,6 +30,10 @@ Debug APK built by CI, reported by `audit/remediation/scripts/apk-report.sh`.
 
 The CI job now fails when a translation file other than `.mo` reaches the APK.
 
+After all remediation changes (`90a4f1d`, CI run 36664371541): 58,233,321 bytes, 2,432 entries.
+The two additional entries are the backup rules added for L3. That is 62,429,784 bytes (−51.7%)
+less than before.
+
 ## World map page (H4)
 
 Browser bench, `audit/remediation/worldmap/scenarios.js`, segment `world1` with all 546 maps

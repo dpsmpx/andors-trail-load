@@ -65,4 +65,16 @@ means no measurement was possible without an Android device.
 
 ## CI result
 
-Pending: filled in from the final CI run.
+Final verification run: GitHub Actions run 36664371541 on `90a4f1d` (the last code change; later
+commits change documents only). All three jobs passed:
+
+| Job / step | Result |
+|---|---|
+| `build`: `testDebugUnitTest` (57 tests) and `testReleaseUnitTest` (57 tests) | passed |
+| `build`: `assembleDebug`, `assembleRelease` (including `lintVitalRelease`) | passed |
+| `build`: `lintDebug` against `app/lint-baseline.xml` | passed; no issue outside the 393 baselined ones |
+| `build`: APK report `--check` | passed; debug APK 58,233,321 bytes, 2,432 entries, 0 unused translation files, 0 direct `Math.clamp` calls |
+| `worldmap-page`: browser regression tests | passed |
+| `content`: content and translation baselines | passed; 0 problems outside the baseline |
+
+The local JVM harness also passes the 57 tests in both variants.

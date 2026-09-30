@@ -21,7 +21,7 @@ happened once (`SavegameCorruptionTest`, fixed in `85bbc8e`). CI is the referenc
 | Job / step | What it checks | Fails when |
 |---|---|---|
 | `build` → Build and test | `testDebugUnitTest testReleaseUnitTest assembleDebug assembleRelease` | A unit test fails in either variant, or a variant does not build |
-| `build` → Lint | `lintDebug` with `app/lint.xml` | Lint reports an error |
+| `build` → Lint | `lintDebug` with `app/lint.xml` and `app/lint-baseline.xml` (393 existing issues: 112 errors, 281 warnings) | Lint reports an issue that is not in the baseline |
 | `build` → APK report | `apk-report.sh --check` on the debug APK | A translation file other than `.mo` is packaged, or dex calls `Math.clamp` directly (API 35) |
 | `worldmap-page` | `build_pages.py` + `scenarios.js` in Chromium | The world map page loads too many images early, leaves visible images unloaded, has script errors, or its fallback fails |
 | `content` | `check-content.sh` | Content or translation problems appear that are not in the reviewed baseline |
@@ -76,5 +76,6 @@ old code but was not run.
 
 ## Results
 
-The results of the final CI run are recorded in `AUDIT_REMEDIATION.md` and
-`AUDIT_REMEDIATION_FINAL_REVIEW.md`.
+Final CI run 36664371541 on `90a4f1d`: every job and step passed (details in
+`AUDIT_REMEDIATION.md`). Locally: `jvm-tests-without-sdk.sh`, 57 tests passed in the debug and the
+release variant.

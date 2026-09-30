@@ -41,6 +41,7 @@ claims, whether anything else changed, and what remains unverified.
 | `testReleaseUnitTest` did not exist under AGP 9, so release code paths were untested | `android.onlyEnableUnitTestForTheTestedBuildType=false` (`788d487`) |
 | Once enabled, two upstream tests failed in the release variant (they assumed debug assertions) | Tests check both variants (`58a1848`) |
 | `lintDebug` ran out of Gradle heap before reporting | 4 GB heap for the CI lint step only (`abaa5a4`) |
+| Lint then reported 112 errors and 281 warnings in the existing code | Baseline generated in CI and committed (`5e654e8` and `28af2b6` added a temporary generation step; `90a4f1d` adds the baseline and removes the step) |
 | `SavegameCorruptionTest` passed locally but failed in CI (`SparseIntArray` in the mockable `android.jar`) | Fixture rebuilt without `Player` serialization (`85bbc8e`); the harness documents the difference |
 | Metrics document claimed "at most 11 comparisons" for a red-black tree | Corrected (`bcd3231`) |
 | Test counts attributed PR #139's tests to the remediation | Corrected in the documents |
@@ -86,7 +87,22 @@ claims, whether anything else changed, and what remains unverified.
 
 ## CI result
 
-Pending: filled in from the final CI run.
+Final verification run: GitHub Actions run 36664371541 on `90a4f1d` (the last code change; later
+commits change documents only). All three jobs passed:
+
+| Job / step | Result |
+|---|---|
+| `build`: `testDebugUnitTest` (57 tests) and `testReleaseUnitTest` (57 tests) | passed |
+| `build`: `assembleDebug`, `assembleRelease` (including `lintVitalRelease`) | passed |
+| `build`: `lintDebug` against `app/lint-baseline.xml` | passed; no issue outside the 393 baselined ones |
+| `build`: APK report `--check` | passed; debug APK 58,233,321 bytes, 2,432 entries, 0 unused translation files, 0 direct `Math.clamp` calls |
+| `worldmap-page`: browser regression tests | passed |
+| `content`: content and translation baselines | passed; 0 problems outside the baseline |
+
+The local JVM harness also passes the 57 tests in both variants.
+
+The lint gate was not exercised with a deliberately introduced issue; it relies on the standard AGP
+baseline mechanism. The content gate was (see `AUDIT_REMEDIATION_TESTING.md`).
 
 ## Proposed upstream pull requests
 
@@ -108,4 +124,4 @@ it.
 | 9 | Map transitions on the UI thread | M5 | `a5de03d` | Device tests 5.1–5.3 |
 | 10 | Manifest and WebView hardening | L1, L2, L3, L4 | `fb2c6ae`, `37f11e6`, `8d6ef2f`, `d745e95`, `6e3a71b` | Device tests 3.6, 3.7, 6.x |
 | 11 | Small fixes | L6, L7, L8, L9, L11 | `8d25d25`, `31daa5c`, `324544b`, `aa98a68` | none |
-| 12 | Tests and CI | L12, L13 | `4465b88`, `58a1848`, `788d487`, `69d1d31`, `abaa5a4`, `f449951` (content check, if wanted) | none |
+| 12 | Tests and CI | L12, L13 | `4465b88`, `58a1848`, `788d487`, `69d1d31`, `abaa5a4`, `90a4f1d` (lint baseline; regenerate it upstream with `updateLintBaseline`), `f449951` (content check, if wanted) | none |
