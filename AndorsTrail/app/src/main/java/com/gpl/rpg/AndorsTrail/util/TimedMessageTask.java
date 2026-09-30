@@ -2,7 +2,9 @@ package com.gpl.rpg.AndorsTrail.util;
 
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 
+// Times ticks with SystemClock.uptimeMillis(), the clock Handler delays use. The wall clock can jump.
 public final class TimedMessageTask extends Handler {
 	private final long interval;
 	private final boolean requireIntervalBeforeFirstTick;
@@ -15,7 +17,7 @@ public final class TimedMessageTask extends Handler {
 		this.interval = interval;
 		this.requireIntervalBeforeFirstTick = requireIntervalBeforeFirstTick;
 		this.callback = callback;
-		this.nextTickTime = System.currentTimeMillis() + interval;
+		this.nextTickTime = SystemClock.uptimeMillis() + interval;
 	}
 
 	@Override
@@ -27,7 +29,7 @@ public final class TimedMessageTask extends Handler {
 	}
 
 	private void tick() {
-		nextTickTime = System.currentTimeMillis() + interval;
+		nextTickTime = SystemClock.uptimeMillis() + interval;
 		boolean continueTicking = callback.onTick(this);
 		if (continueTicking) queueAnotherTick();
 	}
@@ -38,7 +40,7 @@ public final class TimedMessageTask extends Handler {
 	}
 
 	private boolean hasElapsedIntervalTime() {
-		return System.currentTimeMillis() >= nextTickTime;
+		return SystemClock.uptimeMillis() >= nextTickTime;
 	}
 
 	public void queueAnotherTick() {
