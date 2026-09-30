@@ -63,7 +63,7 @@ Each pass times all lookups; the index is built inside each timed pass.
 | | Before (linear scan) | After (index) |
 |---|---:|---:|
 | Monster types / maps / spawn area lookups | 1,907 / 1,296 / 6,675 | same |
-| `equalsIgnoreCase` comparisons per launch | 12,729,225 | 0; at most 11 `CASE_INSENSITIVE_ORDER` comparisons per lookup (1,667 distinct groups in a balanced tree) |
+| `equalsIgnoreCase` comparisons per launch | 12,729,225 | 0; one `TreeMap` lookup among 1,667 distinct groups (about 11, at most 22 `CASE_INSENSITIVE_ORDER` comparisons) |
 | Time for all lookups, mean of 20 passes, 3 runs | 122.9 / 134.9 / 128.3 ms | 2.86 / 2.87 / 2.81 ms |
 | Lookups with a different result | | 0 of 6,675 |
 
