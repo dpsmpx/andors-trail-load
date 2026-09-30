@@ -13,12 +13,6 @@ if (hasKeystoreProperties) {
     }
 }
 
-if (keystorePropertiesFile.exists()) {
-    keystorePropertiesFile.withInputStream { stream ->
-        keystoreProperties.load(stream)
-    }
-}
-
 android {
 
     compileSdkVersion 36
