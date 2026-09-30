@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+. Cloud backups have a 25 MB quota, see backup_rules.xml. A device-to-device
+     transfer has no quota and keeps the world map cache, which saves rebuilding it. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="external" path="andors-trail/worldmap" />
+        <exclude domain="external" path="andors-trail/log" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="external" path="andors-trail/log" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Auto Backup up to Android 11. When the app's data exceeds the 25 MB quota, Android skips the
+     whole backup, so the world map cache (rebuilt from the savegame) and debug logs are left out. -->
+<full-backup-content>
+    <exclude domain="external" path="andors-trail/worldmap" />
+    <exclude domain="external" path="andors-trail/log" />
+</full-backup-content>
