@@ -126,3 +126,250 @@ divergence when it is merged upstream.
 - `WorldMapTemplateTest` and `WorldMapControllerTest` (from the PR).
 - `audit/remediation/worldmap/` browser tests in a separate CI job. They fail on the template of
   the broken first commit and pass on the current one.
+
+## M1. Content validation: missing phrases and unknown ids
+
+**Finding:** M1, a reference to a missing dialogue phrase crashes the game.
+
+**Problem:** `ConversationLoader.loadPhrase` unboxed `null` for an unknown phrase and threw
+`NullPointerException`. Script effects threw on unknown skills (`SkillID.valueOf`), maps, droplists,
+items, item filters and actor conditions.
+
+**Root cause:** content lookups assumed that every id exists. The content is edited by hand and
+only partly validated, and the audit found 22 references to phrases that do not exist.
+
+**Chosen solution:**
+- `loadPhrase` returns `null` for an unknown phrase.
+- The conversation ends in release builds. Debug builds keep the existing "not implemented yet"
+  placeholder so that content authors see the problem.
+- A script effect with an unknown id is skipped, and a requirement on an unknown skill is not
+  fulfilled.
+- Each case is logged as a content error with `L.error`, which logs in release builds too (M6).
+
+**Alternatives considered:**
+- Validating all content at startup and refusing to start. A content bug would then block every
+  player instead of one dialogue branch.
+- Throwing a checked exception. Every caller would need to handle it, for the same result.
+
+**Why this solution:** the smallest change that keeps the game running. The CI content check (M9)
+keeps new broken references from being merged.
+
+**Trade-offs:** a broken reference is now silent in release builds, except in the log. The player
+sees a conversation end early instead of a crash.
+
+**Regression protection:** `ConversationControllerContentErrorsTest`:
+- an unknown phrase is not loaded;
+- a conversation that reaches an unknown phrase ends (release) or shows the placeholder (debug);
+- 12 script effects with unknown ids change nothing;
+- requirements on unknown skills are not fulfilled.
+
+The CI content job fails on new broken references (M9).
+
+**Verification result:** the tests pass on the JVM and in CI.
+
+## M2. ZIP security in "Import world map"
+
+**Finding:** M2, Zip Slip.
+
+**Root cause:** `unzipStreamToDirectory` wrote each entry to `new File(targetDirectory,
+entry.getName())` without checking where the path ends up.
+
+**Chosen solution:** before writing, the canonical path of each entry must start with the canonical
+path of the target directory plus a separator. Otherwise the import fails with an `IOException`,
+which the import already reports as a failure. `DocumentFile.getName()` returning `null` is handled.
+
+**Alternatives considered:**
+- Rejecting every name that contains a separator, as `AUDIT.md` also suggests. Exported world maps
+  are flat, so this would work too. The canonical-path check alone is sufficient, is the check
+  Android's own guidance recommends, and also covers symbolic links.
+- Skipping bad entries instead of failing. A crafted archive is not a valid export, and failing
+  tells the user.
+
+**Trade-offs:** an archive with one bad entry fails as a whole. Entries before the bad one have
+already been extracted inside the world map folder, which is harmless.
+
+**Regression protection:** `AndroidStorageUnzipTest` extracts real ZIP files:
+- a valid export is extracted;
+- existing files are kept when not overwriting;
+- `../savegame1`, `maps/../../savegame2` and `../worldmap-other/x.png` are rejected, and nothing
+  is written outside the folder.
+
+**Verification result:** the tests pass on the JVM and in CI, and fail without the fix.
+
+## M3 and M4. Savegame loading
+
+**Findings:** M3, spawn areas restored by id but reset by index; M4, damaged savegames crash the app.
+
+**Root causes:**
+- M3: `PredefinedMap.readFromParcel` reset areas by index (`i >= number of saved areas`), although
+  it matched them by id.
+- M4: the parsers trust counts and names read from the file, and the load path caught only
+  `IOException` and `DigestException`.
+
+**Chosen solution:**
+- M3: a `boolean[] loaded` marks restored areas. Exactly the other areas are initialized. The id
+  search skips areas that were already restored, so duplicate ids map to successive areas.
+- M4:
+  - `Savegames.loadWorld` turns `RuntimeException`s from parsing into an `IOException`, which is
+    reported as `unknownError`.
+  - A failed parse resets the maps, so a following game does not inherit half-loaded state.
+  - An unknown current map fails the load, as an unknown saved map already did.
+  - The checksum length is checked before allocating.
+
+**Alternatives considered:**
+- Catching `RuntimeException` around the whole scene loader. It would also hide programming errors
+  after a successful parse, which then no longer reach the Play Console crash reports.
+- Validating every count read from the file. Each parser would need a limit. With the
+  `RuntimeException` conversion, only the allocation (checksum) needs an explicit check.
+
+**Trade-offs:** a damaged savegame reports "cannot load" instead of crashing. The file is kept.
+
+**Regression protection:**
+- `PredefinedMapSpawnAreaTest`: an area inserted before saved areas, and duplicate ids.
+- `SavegameCorruptionTest`: a file that ends early (maps are reset), a pre-43 file with more areas
+  than the map, and a huge checksum length.
+- All of them fail without the fix.
+- The unknown-current-map check needs a serialized player, and `Player.writeToParcel` uses
+  `android.util.SparseIntArray`, which JVM unit tests do not provide. It is covered by review only.
+
+**Verification result:** the tests pass on the JVM and in CI.
+
+## M5. Concurrency: map transitions
+
+**Finding:** M5, map transitions change the shared game model on a background thread.
+
+**Root cause:** `placePlayerAsyncAt` ran the whole transition in `AsyncTask.doInBackground`. That
+included moving the player, replacing `currentMaps`, spawning monsters, running scripts and starting
+other `AsyncTask`s. Meanwhile the UI thread drew and handled input from the same objects.
+
+**Chosen solution:** the transition is split into two phases:
+- `loadPlacement`, in the background: reads the TMX map and loads its tiles. It changes no game
+  state.
+- `applyPlacement`, in `onPostExecute` on the UI thread: moves the player, replaces
+  `currentMaps`, and does everything else that changes state.
+
+`placePlayerAt` and `prepareMapAsCurrentMap` run both phases synchronously, as before.
+
+**Alternatives considered:**
+- Locking the model. Every reader in drawing and input handling would need the lock, and a lock
+  in `onDraw` risks stalls.
+- Copying the model. It is too large and too interconnected.
+
+**Why this solution:** the expensive part (file parsing, bitmap decoding) stays in the background.
+The state change happens on the thread that owns the state. A failure while loading now leaves the
+player where they were.
+
+**Trade-offs:** spawning, scripts and replacements now run on the UI thread. They are in-memory
+operations, but their duration on a low-end device is **NOT MEASURED**. A failure in the apply
+phase can still leave partial state; it is logged.
+
+**Regression protection:** the phases are separate methods with documented contracts. There is no
+JVM test, because `AsyncTask`, `Resources` and TMX parsing need Android. Behavior:
+**DEVICE CHECK REQUIRED** (map transitions, combat next to exits, rapid transitions).
+
+**Verification result:** compiles, and the unit tests pass in CI. Not run on a device.
+
+## M6. Concurrency and error reporting: import and export
+
+**Finding:** M6, import/export failures are invisible, and the progress dialog can hang.
+
+**Root cause:** the progress dialog closes only when the task reports a result. Some paths
+reported nothing:
+- `NullPointerException` was swallowed unless the user had cancelled;
+- the unzip task caught only `IOException`.
+
+**Chosen solution:**
+- `BackgroundWorker` guarantees exactly one result:
+  - a thrown exception or a task that returns without a result becomes a failure;
+  - later results are ignored.
+- The copy tasks report their exceptions, and null streams from `ContentResolver` become
+  `IOException`s.
+- Failures are logged with `L.error`, which now logs in release builds. The other log levels stay
+  debug-only.
+- One shared cached thread pool. The `cancelled` flag is volatile. Temporary ZIP files are deleted
+  on every path.
+- A missing quicksave no longer throws inside `quickload`, so the start screen of a new
+  installation logs nothing.
+
+**Alternatives considered:**
+- Fixing each task separately without a guarantee in `BackgroundWorker`. The next task written
+  could hang the dialog again.
+- Replacing `BackgroundWorker` with `java.util.concurrent` futures. That is a larger change of the
+  same idea.
+
+**Trade-offs:** errors are now written to the system log in release builds. They contain file names
+and exception messages, but no savegame content.
+
+**Regression protection:** `BackgroundWorkerTest` covers a result, a thrown exception, a task
+without a result, and results after the first one. Three of the four fail without the fix. The
+`ContentResolver` paths need Android: **DEVICE CHECK REQUIRED** (export or import to a provider that
+fails, and cancelling).
+
+**Verification result:** the tests pass on the JVM and in CI.
+
+## M7. Startup: spawn group lookup
+
+**Finding:** M7, every launch parses all maps, and spawn group lookups are quadratic.
+
+**Chosen solution:** `MonsterTypeCollection` builds a spawn group index on first use and drops it
+when types are added. The index is a `TreeMap` with `String.CASE_INSENSITIVE_ORDER`, which matches
+like `equalsIgnoreCase`, and keeps each group in the iteration order of the id map. Results are
+therefore identical to the linear scan, including their order, and the random choice of spawned
+monsters does not change.
+
+**Alternatives considered:**
+- A `HashMap` keyed by `toLowerCase(Locale.ROOT)`. For a few non-ASCII characters it does not match
+  exactly like `equalsIgnoreCase`.
+- Lazy map parsing and moving the synchronous resource loading off the UI thread. These are the
+  larger startup items in `AUDIT.md`, but whether they are worth their complexity needs a startup
+  profile on a low-end device. **DEFERRED — MAINTAINER DECISION**, **NOT MEASURED**.
+
+**Regression protection:**
+- `MonsterTypeCollectionTest` compares the index with the former linear scan, including case
+  variants, the id fallback and unknown groups.
+- `SpawnGroupBenchmark` checks the same on the real content: all 6,675 lookups over 1,907 monster
+  types give the same result.
+
+**Verification result:** 123–135 ms → 2.8–2.9 ms per pass of all lookups on a desktop JVM (see
+`AUDIT_REMEDIATION_METRICS.md`). Device timing: **NOT MEASURED**.
+
+## M8. World map: first load without a cache
+
+**Finding:** M8, loading a savegame renders every visited map without a world map image.
+
+**Decision:** **DEFERRED — MAINTAINER DECISION.** PR #139 (merged here) already removed the part
+whose cost grew fastest, the segment HTML rebuild after every image. The images are still rendered
+while the savegame loads.
+
+**Why not changed:** rendering them in the background after the scene is ready means reading the
+live game model (visited flags, color filters, spawn areas, tile caches) while the game runs. That
+is the class of problem fixed in M5. Doing it safely needs either a snapshot of the map state or
+rendering on demand when the world map is opened. The cost appears once per savegame and
+installation (reinstall, new device, import without `worldmap.zip`) and was **NOT MEASURED** on a
+device.
+
+**Options for the maintainers:**
+1. Keep rendering during the load, but show progress.
+2. Snapshot the visited maps' state, then render in the background.
+3. Render missing images when the world map is opened.
+
+## M9. Content validation in CI
+
+**Finding:** M9, NPCs that never appear and unreachable dialogue branches.
+
+**Chosen solution:** `audit/remediation/scripts/check-content.sh` runs the audit's content and
+translation checks in a new CI job. A problem that is not in the reviewed baseline
+(`audit/remediation/baselines/`) fails the job.
+
+**Why the content itself is not changed:** each case in `AUDIT.md` needs a content decision:
+- `lae_demon4` names spawn groups (`lae_prisoner2i`) where the engine expects area ids, and each of
+  those groups is used by several areas of `laerothprison4`.
+- `graveyard_corpse_boss_kill` may mean `graveyard_corpse_boss_patrol` or an area that was never
+  added.
+- Spawning `ll2_circe_crew` needs a dialogue phrase that does not exist.
+
+Renaming map areas would also change the ids stored in savegames. **DEFERRED — MAINTAINER
+DECISION** for the content, with the details in `AUDIT.md`.
+
+**Regression protection:** the CI content job. Checked by restoring the two broken Latin strings:
+the job reports three new problems and fails.

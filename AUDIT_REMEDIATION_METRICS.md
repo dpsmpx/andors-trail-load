@@ -52,3 +52,21 @@ fixed, loaded 440 of 546 images (measured during the audit with the same bench).
 On a device, each image of the "before" page is additionally a `content://` request through the
 `FileProvider` (Android 10+). Device timings: **NOT MEASURED** (needs an Android 10+ device with a
 late-game save; see `AUDIT_REMEDIATION_DEVICE_TESTS.md`).
+
+## Spawn group lookups at startup (M7)
+
+JVM bench, `audit/remediation/scripts/spawn-group-benchmark.sh` (run after
+`jvm-tests-without-sdk.sh`). It uses the real content: every monster list and map listed in
+`res/values/loadresources.xml`. It replays the lookup `TMXMapTranslator` makes for each spawn area.
+Each pass times all lookups; the index is built inside each timed pass.
+
+| | Before (linear scan) | After (index) |
+|---|---:|---:|
+| Monster types / maps / spawn area lookups | 1,907 / 1,296 / 6,675 | same |
+| `equalsIgnoreCase` comparisons per launch | 12,729,225 | 0; at most 11 `CASE_INSENSITIVE_ORDER` comparisons per lookup (1,667 distinct groups in a balanced tree) |
+| Time for all lookups, mean of 20 passes, 3 runs | 122.9 / 134.9 / 128.3 ms | 2.86 / 2.87 / 2.81 ms |
+| Lookups with a different result | | 0 of 6,675 |
+
+Device timing of the startup phase: **NOT MEASURED**. It needs a low-end Android device and a
+trace of `ResourceLoader.loadResourcesAsync`, for example with `DEVELOPMENT_DEBUGMESSAGES`
+timing checkpoints.
