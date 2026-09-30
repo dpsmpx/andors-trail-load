@@ -54,7 +54,7 @@
     <string name="dialog_loot_pickall">Colligunt omnia</string>
     <string name="dialog_loot_foundgold">Invenisti %1$,d aurum.</string>
     <string name="dialog_loot_pickedupitem">Vos sustulit an item.</string>
-    <string name="dialog_loot_pickedupitems">%1$D items sustulistis.</string>
+    <string name="dialog_loot_pickedupitems">%1$,d items sustulistis.</string>
     <string name="dialog_groundloot_message">Invenisti aliquid items.</string>
     <string name="dialog_monsterloot_message">Superstites congressus es.</string>
     <string name="dialog_monsterloot_gainedexp">Potuisti %1$,d experientia.</string>
@@ -316,7 +316,7 @@
     <string name="iteminfo_effect_decrease_attack_damage_minmax">Demittit impetus damnum ab %1$,d-%2$,d</string>
     <string name="iteminfo_effect_increase_critical_skill">Addit discrimine ars ab %1$,d*</string>
     <string name="iteminfo_effect_decrease_critical_skill">Demittit criticam ars ab %1$,d</string>
-    <string name="iteminfo_effect_critical_multiplier">Hits critica ope multiplicatoris ex x %1$,d.1f *</string>
+    <string name="iteminfo_effect_critical_multiplier">Hits critica ope multiplicatoris ex x %1$.1f *</string>
     <string name="iteminfo_effect_increase_block_chance">Addit defensio possibilitas ab %1$,d*</string>
     <string name="iteminfo_effect_decrease_block_chance">Demittit defensio possibilitas ab %1$,d</string>
     <string name="iteminfo_effect_increase_damage_resistance">Movet damnum resistentia ab %1$,d</string>
