@@ -373,3 +373,59 @@ DECISION** for the content, with the details in `AUDIT.md`.
 
 **Regression protection:** the CI content job. Checked by restoring the two broken Latin strings:
 the job reports three new problems and fails.
+
+## L1 to L4. Storage, WebView and backup hardening
+
+**Findings:** L1 (FileProvider roots), L2 (WebView), L3 (backup quota), L4 (storage permissions).
+
+**Root cause:** configuration that grants more than the code uses.
+- The provider exposed `root-path`, external storage and both app files directories, and serves
+  only the world map.
+- The WebView allowed `file://` access on every Android version, but uses it only before Android 10.
+- Area names were inserted into the page as HTML.
+- Auto Backup had no rules.
+- The storage permissions were declared for every API level.
+
+**Chosen solution:**
+- **FileProvider:** a single `external-files-path` for `andors-trail/worldmap/`.
+- **WebView:** file access enabled only before Android 10. Area names are HTML-escaped, and the
+  page format version is increased so cached pages are rebuilt once.
+- **Backup:** the world map cache and logs are excluded from cloud backups, but kept for
+  device-to-device transfer, which has no quota.
+- **Permissions:** `maxSdkVersion` 29 for WRITE and 32 for READ. These are the levels at which
+  the code requests them (up to Android 10) and uses READ to migrate old savegames (Android 11
+  and 12). On Android 10, `LoadSaveActivity` finishes when a requested permission is denied, so
+  WRITE must stay declared through API 29.
+
+**Alternatives considered:**
+- Removing the permissions entirely. Android 10 still requests them.
+- A lower `maxSdkVersion` for WRITE (28). On Android 10 the request would then be denied
+  automatically and close the load/save screen.
+
+**Trade-offs:** none known in behavior. The provider and WebView changes break the world map on
+Android 10+ if the path mapping is wrong, which is why they are marked DEVICE CHECK REQUIRED.
+
+**Regression protection:**
+- `FileProviderPathsTest` and `BackupRulesTest` tie the XML paths to the directory constants.
+- `WorldMapControllerTest.areaNamesAreEscaped`.
+- Device tests 3.6, 3.7 and 6.1–6.4.
+
+**Verification result:** the static tests pass and the release build's `lintVitalRelease` passes.
+Device behavior was not observed.
+
+## L12. CI
+
+**Chosen solution:**
+- Actions pinned to commit SHAs; `upload-artifact` moved to v6.0.0 (Node 24). Each SHA was
+  resolved with `git ls-remote`, and each `action.yml` runtime was read at that SHA.
+- Release unit tests and release build: `testReleaseUnitTest` needed
+  `android.onlyEnableUnitTestForTheTestedBuildType=false` under AGP 9.
+- Lint with a 4 GB heap for that step only.
+- The content job (M9) and the world map job (H4).
+
+**Not changed:**
+- Duplicate `push`/`pull_request` runs for branches in the same repository. The fork relies on
+  push runs; limiting them is the maintainers' choice. **DEFERRED — MAINTAINER DECISION.**
+- `.travis.yml` and `travis/`. Removing another project's CI configuration is the maintainers'
+  choice. **DEFERRED — MAINTAINER DECISION.**
+- Fork PR approval. A GitHub security setting that protects secrets. **INTENTIONAL.**
