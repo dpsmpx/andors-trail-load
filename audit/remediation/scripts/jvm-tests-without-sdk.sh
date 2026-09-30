@@ -17,7 +17,9 @@
 #   other AndroidX classes are stubs that do nothing.
 # - Java 21 is required: the app calls Math.clamp, which Android provides from API 35 on.
 #
-# Usage: audit/remediation/scripts/jvm-tests-without-sdk.sh [work-dir]
+# Usage: [BUILD_TYPE=release] audit/remediation/scripts/jvm-tests-without-sdk.sh [work-dir]
+#   BUILD_TYPE=release generates the BuildConfig of release builds (like testReleaseUnitTest),
+#   in which the DEVELOPMENT_* flags are off.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
@@ -61,13 +63,14 @@ with open(os.path.join(out, 'R.java'), 'w') as fh:
 text = open(gradle, encoding='utf-8').read() + open(manifest, encoding='utf-8').read()
 code = re.search(r'versionCode\W+(\d+)', text).group(1)
 name = re.search(r'versionName\W+"?([\w.]+)', text).group(1)
+debug = os.environ.get('BUILD_TYPE', 'debug') != 'release'  # versionNameSuffix 'dev' of the debug build type
 with open(os.path.join(out, 'BuildConfig.java'), 'w') as fh:
     fh.write('package com.gpl.rpg.AndorsTrail;\npublic final class BuildConfig {\n'
-             '  public static final boolean DEBUG = true;\n'
-             '  public static final String APPLICATION_ID = "com.gpl.rpg.AndorsTrail.dev";\n'
-             '  public static final String BUILD_TYPE = "debug";\n'
+             f'  public static final boolean DEBUG = {"true" if debug else "false"};\n'
+             f'  public static final String APPLICATION_ID = "com.gpl.rpg.AndorsTrail{".dev" if debug else ""}";\n'
+             f'  public static final String BUILD_TYPE = "{"debug" if debug else "release"}";\n'
              f'  public static final int VERSION_CODE = {code};\n'
-             f'  public static final String VERSION_NAME = "{name}dev";\n}}\n')
+             f'  public static final String VERSION_NAME = "{name}{"dev" if debug else ""}";\n}}\n')
 EOF
 
 # Minimal AndroidX stubs: only the types that appear in signatures of classes the tests load.
