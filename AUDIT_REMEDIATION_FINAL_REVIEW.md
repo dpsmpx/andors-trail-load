@@ -23,7 +23,7 @@ claims, whether anything else changed, and what remains unverified.
 
 | Check | Result |
 |---|---|
-| Files changed | 56 (28 production and build files, the rest tests, CI, tools and documents) |
+| Files changed | 61: 28 production and build files (+552 −193), 14 test files (+1,013 −4), 9 CI and tool files (+791 −5), 3 generated baselines (+5,684), 7 documents (+961) |
 | `System.out`, `printStackTrace`, `Thread.sleep` in added lines | Only where intended: the JVM-test fallback in `util/L.java`, a 100 ms wait for late results in `BackgroundWorkerTest`, and the output of `SpawnGroupBenchmark` (a command-line tool) |
 | `@Ignore`, disabled or weakened tests | None. The two `GameRoundControllerTest` assertion tests were extended to check release builds as well, not relaxed. |
 | Empty `catch` blocks added | None |
