@@ -45,17 +45,20 @@ public final class MovementController implements TimedMessageTask.Callback {
 
 	public void placePlayerAsyncAt(final MapObject.MapObjectType objectType, final String mapName, final String placeName, final int offset_x, final int offset_y) {
 		AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+			private Placement placement = null;
 			private boolean mapLoadFailed = false;  // (1) flag to carry failure to onPostExecute
 
 			@Override
 			protected Void doInBackground(Void... arg0) {
 				stopMovement();
 
+				// Only reads the map and fills tile caches. The game state is changed in
+				// onPostExecute, on the thread that also draws it and handles input.
 				try {
-					placePlayerAt(controllers.getResources(), objectType, mapName, placeName, offset_x, offset_y);
+					placement = loadPlacement(controllers.getResources(), objectType, mapName, placeName, offset_x, offset_y);
 				} catch (RuntimeException e) {
-					L.error("Map transition failed: " + e.getMessage());  // (2) log it
-					mapLoadFailed = true;                                  // (3) signal failure
+					L.error("Map transition failed", e);  // (2) log it
+					mapLoadFailed = true;                  // (3) signal failure
 				}
 
 				return null;
@@ -65,9 +68,16 @@ public final class MovementController implements TimedMessageTask.Callback {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				stopMovement();
-				// (4) always release the pause — timer can never get stuck
-				controllers.gameRoundController.releasePause(PauseReason.MAP_TRANSITION);
-				mapTransitionInProgress = false;
+				try {
+					if (placement != null) applyPlacement(placement, controllers.getResources());
+				} catch (RuntimeException e) {
+					L.error("Map transition failed", e);
+					mapLoadFailed = true;
+				} finally {
+					// (4) always release the pause — timer can never get stuck
+					controllers.gameRoundController.releasePause(PauseReason.MAP_TRANSITION);
+					mapTransitionInProgress = false;
+				}
 				if (!mapLoadFailed) {
 					playerMovementListeners.onPlayerEnteredNewMap(
 							world.model.currentMaps.map, world.model.player.position);
@@ -89,26 +99,53 @@ public final class MovementController implements TimedMessageTask.Callback {
 	 * "recently visited" after leaving.</p>
 	 */
 	public void placePlayerAt(final Resources res, MapObject.MapObjectType objectType, String mapName, String placeName, int offset_x, int offset_y) {
-		if (mapName == null || placeName == null) return;
+		Placement placement = loadPlacement(res, objectType, mapName, placeName, offset_x, offset_y);
+		if (placement != null) applyPlacement(placement, res);
+	}
+
+	// A map transition whose destination map has been read, but not yet applied to the game state.
+	private static final class Placement {
+		final MapObject place;
+		final int offset_x;
+		final int offset_y;
+		final MapBundle maps;
+
+		Placement(MapObject place, int offset_x, int offset_y, MapBundle maps) {
+			this.place = place;
+			this.offset_x = offset_x;
+			this.offset_y = offset_y;
+			this.maps = maps;
+		}
+	}
+
+	// Returns null if the destination does not exist. Does not change the game state.
+	private Placement loadPlacement(final Resources res, MapObject.MapObjectType objectType, String mapName, String placeName, int offset_x, int offset_y) {
+		if (mapName == null || placeName == null) return null;
 		PredefinedMap newMap = world.maps.findPredefinedMap(mapName);
 		if (newMap == null) {
 			L.log("Cannot find map " + mapName);
-			return;
+			return null;
 		}
 		MapObject place = newMap.findEventObject(objectType, placeName);
 		if (place == null) {
 			L.log("Cannot find place " + placeName + " of type " + objectType + " in map " + mapName);
-			return;
+			return null;
 		}
 		if (!place.isActive) {
 			L.log("Place " + placeName + " of type " + objectType + " in map " + mapName + " cannot be used as it is inactive");
-			return;
+			return null;
 		}
+		return new Placement(place, offset_x, offset_y, loadMap(newMap, res));
+	}
+
+	private void applyPlacement(Placement placement, final Resources res) {
 		final ModelContainer model = world.model;
+		final MapObject place = placement.place;
+		final PredefinedMap newMap = placement.maps.map;
 
 		model.player.position.set(place.position.topLeft);
-		model.player.position.x += Math.min(offset_x, place.position.size.width-1);
-		model.player.position.y += Math.min(offset_y, place.position.size.height-1);
+		model.player.position.x += Math.min(placement.offset_x, place.position.size.width-1);
+		model.player.position.y += Math.min(placement.offset_y, place.position.size.height-1);
 		model.player.lastPosition.set(model.player.position);
 
 		if (!newMap.visited) {
@@ -118,7 +155,7 @@ public final class MovementController implements TimedMessageTask.Callback {
 		// Mark last visit time on current map before leaving it (unless it has been reset because we're in hero respawn)
 		if (model.currentMaps.map != null && !model.currentMaps.map.hasResetTemporaryData()) model.currentMaps.map.updateLastVisitTime();
 
-		prepareMapAsCurrentMap(newMap, res, true);
+		setCurrentMap(placement.maps, res, true);
 	}
 
 	private void playerVisitsMapFirstTime(PredefinedMap m) {
@@ -134,7 +171,11 @@ public final class MovementController implements TimedMessageTask.Callback {
 	 * before scripts, blocked-actor handling, and visual refreshes run.</p>
 	 */
 	public void prepareMapAsCurrentMap(PredefinedMap newMap, Resources res, boolean spawnMonsters) {
-		final ModelContainer model = world.model;
+		setCurrentMap(loadMap(newMap, res), res, spawnMonsters);
+	}
+
+	// Reads the map and loads its tiles into the tile cache. Does not change the game state.
+	private MapBundle loadMap(PredefinedMap newMap, Resources res) {
 		MapBundle newMaps = new MapBundle();
 		newMaps.map = newMap;
 
@@ -143,7 +184,13 @@ public final class MovementController implements TimedMessageTask.Callback {
 		TileCollection cachedTiles = world.tileManager.loadTilesFor(newMaps.map, mapTiles, world, res);
 		newMaps.tileMap = mapTiles;
 		newMaps.tiles = cachedTiles;
-		world.tileManager.cacheAdjacentMaps(res, world, newMaps.map);
+		return newMaps;
+	}
+
+	private void setCurrentMap(MapBundle newMaps, Resources res, boolean spawnMonsters) {
+		final ModelContainer model = world.model;
+		final PredefinedMap newMap = newMaps.map;
+		world.tileManager.cacheAdjacentMaps(res, world, newMap);
 		world.model.currentMaps = newMaps;
 
 		//Apply replacements before spawning, so that MonsterSpawnArea's isActive variable is up to date.
