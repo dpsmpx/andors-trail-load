@@ -76,6 +76,7 @@ public final class WorldMapControllerTest {
 		// Named areas come from translations (audit finding L2).
 		assertEquals("Fallhaven", WorldMapController.escapeHtmlText("Fallhaven"));
 		assertEquals("Tom &amp; Jerry's &lt;b&gt; &amp;amp;", WorldMapController.escapeHtmlText("Tom & Jerry's <b> &amp;"));
+		assertEquals("", WorldMapController.escapeHtmlText(null));
 	}
 
 	private static File createTempFile(String content) throws IOException {

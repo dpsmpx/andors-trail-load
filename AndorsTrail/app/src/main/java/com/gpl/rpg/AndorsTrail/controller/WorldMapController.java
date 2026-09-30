@@ -327,6 +327,7 @@ public final class WorldMapController {
 
 	// Area names come from translations and are inserted as HTML text.
 	static String escapeHtmlText(String s) {
+		if (s == null) return ""; // A named area without a name in worldmap.xml.
 		return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
 	}
 
