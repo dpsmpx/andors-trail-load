@@ -3,6 +3,7 @@ package com.gpl.rpg.AndorsTrail;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 import com.gpl.rpg.AndorsTrail.context.ControllerContext;
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
@@ -123,10 +124,10 @@ public final class AndorsTrailApplication extends Application {
 
 		Locale targetLocale;
 
-		if (lastLocale != null && lastLocale.first == preferences.language) {
+		if (lastLocale != null && Objects.equals(lastLocale.first, preferences.language)) {
 			targetLocale = lastLocale.second;
 		} else {
-			targetLocale = localeForLanguageTag(preferences.language);
+			targetLocale = localeForLanguageTag(preferences.language, defaultLocale);
 			lastLocale = new Pair<String, Locale>(preferences.language, targetLocale);
 		}
 
@@ -141,15 +142,20 @@ public final class AndorsTrailApplication extends Application {
 		return true;
 	}
 
-	// Supports language or language_COUNTRY in short form e.g. "en" or "en_US"
-	private Locale localeForLanguageTag(String languageTag) {
+	// Supports language or language-COUNTRY in short form e.g. "en" or "en-US"
+	// Package-private for AndorsTrailApplicationTest.
+	static Locale localeForLanguageTag(String languageTag, Locale defaultLocale) {
 		Locale locale = null;
 		if (languageTag != null && !languageTag.equalsIgnoreCase("default")) {
 			final int pos = languageTag.indexOf('-');
 			if (pos == -1) {
 				locale = new Locale(languageTag);
+			} else {
+				String country = languageTag.substring(pos+1);
+				// Also accept the resource qualifier form "zh-rCN" (res/values/arrays.xml).
+				if (country.length() == 3 && country.charAt(0) == 'r') country = country.substring(1);
+				locale = new Locale(languageTag.substring(0, pos), country);
 			}
-			else locale = new Locale(languageTag.substring(0, pos), languageTag.substring(pos+1));
 		}
 		if (locale == null) {
 			locale = defaultLocale;

@@ -3,6 +3,7 @@ package com.gpl.rpg.AndorsTrail.model.actor;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
 import com.gpl.rpg.AndorsTrail.controller.Constants;
@@ -109,7 +110,7 @@ public final class Monster extends Actor {
 	public static Monster newFromParcel(DataInputStream src, WorldContext world, int fileversion, MonsterSpawnArea area) throws IOException {
 		String monsterTypeId = src.readUTF();
 		if (fileversion < 20) {
-			monsterTypeId = monsterTypeId.replace(' ', '_').replace("\\'", "").toLowerCase();
+			monsterTypeId = monsterTypeId.replace(' ', '_').replace("\\'", "").toLowerCase(Locale.ROOT); // An id, not text: "I" must not become Turkish "ı".
 		}
 		MonsterType monsterType = world.monsterTypes.getMonsterType(monsterTypeId);
 
