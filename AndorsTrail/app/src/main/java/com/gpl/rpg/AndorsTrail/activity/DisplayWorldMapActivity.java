@@ -15,6 +15,7 @@ import com.gpl.rpg.AndorsTrail.util.L;
 import com.gpl.rpg.AndorsTrail.util.ThemeHelper;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -60,7 +61,8 @@ public final class DisplayWorldMapActivity extends AndorsTrailBaseActivity {
 		displayworldmap_webview.getSettings().setUseWideViewPort(true);
 		displayworldmap_webview.setVerticalScrollBarEnabled(true);
 		displayworldmap_webview.setHorizontalScrollBarEnabled(true);
-		displayworldmap_webview.getSettings().setAllowFileAccess(true);
+		// file:// URLs are used before Android 10 only, see AndroidStorage.getUrlForFile.
+		displayworldmap_webview.getSettings().setAllowFileAccess(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q);
 		enableJavascript();
 
 		Button b = (Button) findViewById(R.id.displayworldmap_close);

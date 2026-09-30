@@ -45,7 +45,7 @@ public final class WorldMapController {
 
 	// Increment when the HTML written by getWorldMapSegmentAsHtml changes, so that cached world map files
 	// are regenerated. Changes to R.string.worldmap_template are detected automatically, see getWorldMapHtmlVersion.
-	private static final int WORLDMAP_HTML_FORMAT_VERSION = 2;
+	private static final int WORLDMAP_HTML_FORMAT_VERSION = 3;
 	private static String worldMapHtmlVersion;
 
 	public static void updateWorldMap(Context context, final WorldContext world, final Resources res) {
@@ -264,7 +264,7 @@ public final class WorldMapController {
 				.append("px; top:")
 				.append((r.topLeft.y - offsetWorldmapTo.y) * WorldMapController.WORLDMAP_DISPLAY_TILESIZE)
 				.append("px;\"><span>")
-				.append(area.name)
+				.append(escapeHtmlText(area.name))
 				.append("</span></div>");
 			if (AndorsTrailApplication.DEVELOPMENT_DEBUGMESSAGES) namedAreasAsHtml.append('\n');
 		}
@@ -323,6 +323,11 @@ public final class WorldMapController {
 			worldMapHtmlVersion = WORLDMAP_HTML_FORMAT_VERSION + "-" + Integer.toHexString(templateHash);
 		}
 		return worldMapHtmlVersion;
+	}
+
+	// Area names come from translations and are inserted as HTML text.
+	static String escapeHtmlText(String s) {
+		return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
 	}
 
 	static String getWorldMapHtmlVersionMarker(String version) {

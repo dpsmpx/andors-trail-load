@@ -1,5 +1,6 @@
 package com.gpl.rpg.AndorsTrail.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -68,6 +69,13 @@ public final class WorldMapControllerTest {
 		File file = File.createTempFile("andors-trail-worldmap-missing-", ".html");
 		assertTrue(file.delete());
 		assertFalse(WorldMapController.isWorldMapHtmlCurrent(file, VERSION));
+	}
+
+	@Test
+	public void areaNamesAreEscaped() {
+		// Named areas come from translations (audit finding L2).
+		assertEquals("Fallhaven", WorldMapController.escapeHtmlText("Fallhaven"));
+		assertEquals("Tom &amp; Jerry's &lt;b&gt; &amp;amp;", WorldMapController.escapeHtmlText("Tom & Jerry's <b> &amp;"));
 	}
 
 	private static File createTempFile(String content) throws IOException {
