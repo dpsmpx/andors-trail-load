@@ -57,3 +57,15 @@ jobs:
           set -o pipefail
           python3 audit/remediation/worldmap/build_pages.py "$RUNNER_TEMP/worldmap-pages"
           node audit/remediation/worldmap/scenarios.js "$RUNNER_TEMP/worldmap-pages" | tee "$RUNNER_TEMP/worldmap-report.json"
+
+  content:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Content and translation checks
+        run: |
+          set -o pipefail
+          bash audit/remediation/scripts/check-content.sh | tee -a "$GITHUB_STEP_SUMMARY"

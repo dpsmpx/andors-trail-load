@@ -1,0 +1,7 @@
+Strings formatted with arguments in code: 163
+
+## Translations that throw when formatted: 0 in 0 strings
+
+## Translations that drop an argument (no crash, value not shown): 12 in 2 strings
+  - skill_longdescription_armor_prof_heavy: be, cs, el, hu, it, ja, ko, nb, nl, tl, tr
+  - skill_longdescription_fightstyle_weapon_shield: vi

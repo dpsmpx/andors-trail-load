@@ -1,0 +1,740 @@
+Spawn areas in loaded maps: 6675
+Loaded: 1000 items, 1907 monsters, 823 droplists, 15460 phrases, 207 quests, 147 actor conditions, 1296 maps, 212 tilesets
+Phrases never referenced from content (may be unused): 152
+
+## dead-exit: 91
+  - map ratdom_maze_403 object "north2" (mapchange): target map "ratdom_maze_394" does not exist (exit is walled off)
+  - map ratdom_maze_403 object "north1" (mapchange): target map "ratdom_maze_393" does not exist (exit is walled off)
+  - map ratdom_maze_412 object "north1" (mapchange): target map "ratdom_maze_401" does not exist (exit is walled off)
+  - map ratdom_maze_414 object "north2" (mapchange): target map "ratdom_maze_404" does not exist (exit is walled off)
+  - map ratdom_maze_415 object "north2" (mapchange): target map "ratdom_maze_405" does not exist (exit is walled off)
+  - map ratdom_maze_415 object "north1" (mapchange): target map "ratdom_maze_404" does not exist (exit is walled off)
+  - map ratdom_maze_416 object "north2" (mapchange): target map "ratdom_maze_406" does not exist (exit is walled off)
+  - map ratdom_maze_416 object "north1" (mapchange): target map "ratdom_maze_405" does not exist (exit is walled off)
+  - map ratdom_maze_417 object "north2" (mapchange): target map "ratdom_maze_407" does not exist (exit is walled off)
+  - map ratdom_maze_418 object "north2" (mapchange): target map "ratdom_maze_408" does not exist (exit is walled off)
+  - map ratdom_maze_418 object "north1" (mapchange): target map "ratdom_maze_407" does not exist (exit is walled off)
+  - map ratdom_maze_421 object "south1" (mapchange): target map "ratdom_maze_431" does not exist (exit is walled off)
+  - map ratdom_maze_428 object "south2" (mapchange): target map "ratdom_maze_439" does not exist (exit is walled off)
+  - map ratdom_maze_428 object "north2" (mapchange): target map "ratdom_maze_419" does not exist (exit is walled off)
+  - map ratdom_maze_448 object "south2" (mapchange): target map "ratdom_maze_459" does not exist (exit is walled off)
+  - map ratdom_maze_451 object "south1" (mapchange): target map "ratdom_maze_460" does not exist (exit is walled off)
+  - map ratdom_maze_451 object "north1" (mapchange): target map "ratdom_maze_440" does not exist (exit is walled off)
+  - map ratdom_maze_456 object "south1" (mapchange): target map "ratdom_maze_465" does not exist (exit is walled off)
+  - map ratdom_maze_463 object "south1" (mapchange): target map "ratdom_maze_473" does not exist (exit is walled off)
+  - map ratdom_maze_464 object "south2" (mapchange): target map "ratdom_maze_475" does not exist (exit is walled off)
+  - map ratdom_maze_464 object "south1" (mapchange): target map "ratdom_maze_474" does not exist (exit is walled off)
+  - map ratdom_maze_466 object "south2" (mapchange): target map "ratdom_maze_477" does not exist (exit is walled off)
+  - map ratdom_maze_467 object "south2" (mapchange): target map "ratdom_maze_478" does not exist (exit is walled off)
+  - map ratdom_maze_467 object "south1" (mapchange): target map "ratdom_maze_477" does not exist (exit is walled off)
+  - map ratdom_maze_476 object "south2" (mapchange): target map "ratdom_maze_486" does not exist (exit is walled off)
+  - map ratdom_maze_476 object "south1" (mapchange): target map "ratdom_maze_485" does not exist (exit is walled off)
+  - map ratdom_maze_506 object "north2" (mapchange): target map "ratdom_maze_507" does not exist (exit is walled off)
+  - map ratdom_maze_513 object "north2" (mapchange): target map "ratdom_maze_503" does not exist (exit is walled off)
+  - map ratdom_maze_513 object "north1" (mapchange): target map "ratdom_maze_502" does not exist (exit is walled off)
+  - map ratdom_maze_514 object "north2" (mapchange): target map "ratdom_maze_504" does not exist (exit is walled off)
+  - map ratdom_maze_514 object "north1" (mapchange): target map "ratdom_maze_503" does not exist (exit is walled off)
+  - map ratdom_maze_515 object "north2" (mapchange): target map "ratdom_maze_505" does not exist (exit is walled off)
+  - map ratdom_maze_515 object "north1" (mapchange): target map "ratdom_maze_504" does not exist (exit is walled off)
+  - map ratdom_maze_516 object "north1" (mapchange): target map "ratdom_maze_505" does not exist (exit is walled off)
+  - map ratdom_maze_517 object "north2" (mapchange): target map "ratdom_maze_507" does not exist (exit is walled off)
+  - map ratdom_maze_521 object "north1" (mapchange): target map "ratdom_maze_511" does not exist (exit is walled off)
+  - map ratdom_maze_522 object "north1" (mapchange): target map "ratdom_maze_512" does not exist (exit is walled off)
+  - map ratdom_maze_531 object "south1" (mapchange): target map "ratdom_maze_540" does not exist (exit is walled off)
+  - map ratdom_maze_531 object "north1" (mapchange): target map "ratdom_maze_520" does not exist (exit is walled off)
+  - map ratdom_maze_538 object "north2" (mapchange): target map "ratdom_maze_528" does not exist (exit is walled off)
+  - map ratdom_maze_545 object "south2" (mapchange): target map "ratdom_maze_556" does not exist (exit is walled off)
+  - map ratdom_maze_551 object "south1" (mapchange): target map "ratdom_maze_560" does not exist (exit is walled off)
+  - map ratdom_maze_551 object "north1" (mapchange): target map "ratdom_maze_540" does not exist (exit is walled off)
+  - map ratdom_maze_562 object "south2" (mapchange): target map "ratdom_maze_573" does not exist (exit is walled off)
+  - map ratdom_maze_563 object "south1" (mapchange): target map "ratdom_maze_573" does not exist (exit is walled off)
+  - map ratdom_maze_564 object "south1" (mapchange): target map "ratdom_maze_574" does not exist (exit is walled off)
+  - map ratdom_maze_565 object "south1" (mapchange): target map "ratdom_maze_575" does not exist (exit is walled off)
+  - map ratdom_maze_565 object "north2" (mapchange): target map "ratdom_maze_556" does not exist (exit is walled off)
+  - map ratdom_maze_566 object "south1" (mapchange): target map "ratdom_maze_576" does not exist (exit is walled off)
+  - map ratdom_maze_567 object "south1" (mapchange): target map "ratdom_maze_577" does not exist (exit is walled off)
+  - map ratdom_maze_568 object "south2" (mapchange): target map "ratdom_maze_579" does not exist (exit is walled off)
+  - map ratdom_maze_568 object "south1" (mapchange): target map "ratdom_maze_578" does not exist (exit is walled off)
+  - map ratdom_maze_568 object "north2" (mapchange): target map "ratdom_maze_559" does not exist (exit is walled off)
+  - map ratdom_maze_572 object "south2" (mapchange): target map "ratdom_maze_582" does not exist (exit is walled off)
+  - map ratdom_maze_572 object "south1" (mapchange): target map "ratdom_maze_581" does not exist (exit is walled off)
+  - map ratdom_maze_611 object "south1" (mapchange): target map "ratdom_maze_620" does not exist (exit is walled off)
+  - map ratdom_maze_611 object "north2" (mapchange): target map "ratdom_maze_601" does not exist (exit is walled off)
+  - map ratdom_maze_611 object "north1" (mapchange): target map "ratdom_maze_600" does not exist (exit is walled off)
+  - map ratdom_maze_612 object "north2" (mapchange): target map "ratdom_maze_602" does not exist (exit is walled off)
+  - map ratdom_maze_612 object "north1" (mapchange): target map "ratdom_maze_601" does not exist (exit is walled off)
+  - map ratdom_maze_617 object "north2" (mapchange): target map "ratdom_maze_607" does not exist (exit is walled off)
+  - map ratdom_maze_617 object "north1" (mapchange): target map "ratdom_maze_606" does not exist (exit is walled off)
+  - map ratdom_maze_618 object "north2" (mapchange): target map "ratdom_maze_608" does not exist (exit is walled off)
+  - map ratdom_maze_618 object "north1" (mapchange): target map "ratdom_maze_607" does not exist (exit is walled off)
+  - map ratdom_maze_622 object "north2" (mapchange): target map "ratdom_maze_613" does not exist (exit is walled off)
+  - map ratdom_maze_623 object "north2" (mapchange): target map "ratdom_maze_614" does not exist (exit is walled off)
+  - map ratdom_maze_624 object "north1" (mapchange): target map "ratdom_maze_614" does not exist (exit is walled off)
+  - map ratdom_maze_628 object "south2" (mapchange): target map "ratdom_maze_639" does not exist (exit is walled off)
+  - map ratdom_maze_628 object "north2" (mapchange): target map "ratdom_maze_619" does not exist (exit is walled off)
+  - map ratdom_maze_631 object "south1" (mapchange): target map "ratdom_maze_640" does not exist (exit is walled off)
+  - map ratdom_maze_631 object "north1" (mapchange): target map "ratdom_maze_620" does not exist (exit is walled off)
+  - map ratdom_maze_641 object "south1" (mapchange): target map "ratdom_maze_651" does not exist (exit is walled off)
+  - map ratdom_maze_644 object "south1" (mapchange): target map "ratdom_maze_654" does not exist (exit is walled off)
+  - map ratdom_maze_648 object "south2" (mapchange): target map "ratdom_maze_659" does not exist (exit is walled off)
+  - map ratdom_maze_648 object "north2" (mapchange): target map "ratdom_maze_639" does not exist (exit is walled off)
+  - map ratdom_maze_655 object "south2" (mapchange): target map "ratdom_maze_665" does not exist (exit is walled off)
+  - map ratdom_maze_656 object "south1" (mapchange): target map "ratdom_maze_665" does not exist (exit is walled off)
+  - map ratdom_maze_657 object "south2" (mapchange): target map "ratdom_maze_667" does not exist (exit is walled off)
+  - map ratdom_maze_661 object "south1" (mapchange): target map "ratdom_maze_671" does not exist (exit is walled off)
+  - map ratdom_maze_662 object "south1" (mapchange): target map "ratdom_maze_672" does not exist (exit is walled off)
+  - map ratdom_maze_664 object "south2" (mapchange): target map "ratdom_maze_675" does not exist (exit is walled off)
+  - map ratdom_maze_664 object "south1" (mapchange): target map "ratdom_maze_674" does not exist (exit is walled off)
+  - map ratdom_maze_664 object "north1" (mapchange): target map "ratdom_maze_654" does not exist (exit is walled off)
+  - map ratdom_maze_666 object "south1" (mapchange): target map "ratdom_maze_676" does not exist (exit is walled off)
+  - map ratdom_maze_705 object "south1" (mapchange): target map "ratdom_maze_431" does not exist (exit is walled off)
+  - map ratdom_maze_768 object "south2" (mapchange): target map "ratdom_maze_579" does not exist (exit is walled off)
+  - map ratdom_maze_768 object "south1" (mapchange): target map "ratdom_maze_578" does not exist (exit is walled off)
+  - map ratdom_maze_768 object "north2" (mapchange): target map "ratdom_maze_559" does not exist (exit is walled off)
+  - map galmore_19 object "east" (mapchange): target map "galmore_110" does not exist (exit is walled off)
+  - map galmore_39 object "east" (mapchange): target map "galmore_310" does not exist (exit is walled off)
+  - map galmore_cavea object "down3" (mapchange): target map "galmore_cavea_3" does not exist (exit is walled off)
+
+## loadlist: 1
+  - res/raw/itemlist_pre0610_unused.json is not listed in any production load list (never loaded)
+
+## map: 312
+  - map crossglen_farmhouse: spawn area name "old_couple_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map wild6_house: spawn area name "aidem_wild6house_thieves" used 2 times (must be unique, used by scripts and savegames)
+  - map wild10: spawn area name "wild_flowers" used 3 times (must be unique, used by scripts and savegames)
+  - map wild11: spawn area name "wild_flowers" used 2 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain0: spawn area name "forestwolf1" used 2 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain0: spawn area name "forestboar2" used 2 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain5: spawn area name "gornaud_1" used 3 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain5: spawn area name "gornaud_2" used 2 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain7: spawn area name "gornaud_1" used 5 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain9: spawn area name "gornaud_1" used 2 times (must be unique, used by scripts and savegames)
+  - map blackwater_mountain39: spawn area name "wyrm_2" used 3 times (must be unique, used by scripts and savegames)
+  - map wild16: spawn area name "forestboar2" used 2 times (must be unique, used by scripts and savegames)
+  - map wild16: spawn area name "forestbeetle" used 3 times (must be unique, used by scripts and savegames)
+  - map wild17: spawn area name "forestbeetle" used 2 times (must be unique, used by scripts and savegames)
+  - map waterway5: spawn area name "izthiel_4" used 2 times (must be unique, used by scripts and savegames)
+  - map waytolostmine0: spawn area name "ccentip_12" used 2 times (must be unique, used by scripts and savegames)
+  - map stoutford_gate: spawn area name "stoutford_builder" used 2 times (must be unique, used by scripts and savegames)
+  - map guynmart_passage object "guynmart:666" (key): area 544,96 32x64 extends outside the 17x9 map
+  - map guynmart_wood_11 object "guynmart_dog10" (spawn): area 160,-224 96x64 extends outside the 30x30 map
+  - map lakecave0: spawn area name "lakecave0_2" used 2 times (must be unique, used by scripts and savegames)
+  - map guildbrig2: spawn area name "aidem_jail_thieves" used 5 times (must be unique, used by scripts and savegames)
+  - map arulircave1: spawn area name "arulir_2" used 10 times (must be unique, used by scripts and savegames)
+  - map arulircave1: spawn area name "gornaud_4" used 2 times (must be unique, used by scripts and savegames)
+  - map arulircave2: spawn area name "arulir_2" used 4 times (must be unique, used by scripts and savegames)
+  - map arulircave3: spawn area name "arulir_2" used 2 times (must be unique, used by scripts and savegames)
+  - map arulircave4: spawn area name "arulir_3" used 3 times (must be unique, used by scripts and savegames)
+  - map arulircave5: spawn area name "arulir_3" used 3 times (must be unique, used by scripts and savegames)
+  - map arulircave6: spawn area name "gornaud_4" used 2 times (must be unique, used by scripts and savegames)
+  - map arulircave6: spawn area name "arulir_3" used 4 times (must be unique, used by scripts and savegames)
+  - map arulirmountain2: spawn area name "arulir_1" used 2 times (must be unique, used by scripts and savegames)
+  - map mywild18: spawn area name "forestwolf1" used 3 times (must be unique, used by scripts and savegames)
+  - map mywild18: spawn area name "forestboar2" used 2 times (must be unique, used by scripts and savegames)
+  - map mywild19: spawn area name "forestserpent1" used 2 times (must be unique, used by scripts and savegames)
+  - map mywild19: spawn area name "forestwolf1" used 2 times (must be unique, used by scripts and savegames)
+  - map mywild20: spawn area name "forestserpent1" used 2 times (must be unique, used by scripts and savegames)
+  - map way_to_sullengard_east4 object "yellow_tooth_spawn2" (spawn): area 224,-64 192x64 extends outside the 20x16 map
+  - map haunted_cemetery1: spawn area name "graveyard_gatekeeper_spawn3" used 2 times (must be unique, used by scripts and savegames)
+  - map ratdom_maze_455a object "ratdom_maze_rat" (spawn): area -64,96 96x96 extends outside the 11x21 map
+  - map aidem_base_2: spawn area name "aidem_base_thieves" used 4 times (must be unique, used by scripts and savegames)
+  - map aidem_camp: spawn area name "aidem_camp_thieves" used 5 times (must be unique, used by scripts and savegames)
+  - map rat_mountain_8: spawn area name "dirt_spider_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map way_to_sullengard_west_5: spawn area name "verdant_cyclopea_creeper_spawn1" used 2 times (must be unique, used by scripts and savegames)
+  - map island_underground1: spawn area name "church_dweller_spawn_2" used 2 times (must be unique, used by scripts and savegames)
+  - map laerothisland0: spawn area name "spawn_3" used 2 times (must be unique, used by scripts and savegames)
+  - map laerothisland1: spawn area name "lake_fish_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map gamjee_well_2_1: spawn area name "hidden_voices_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map gamjee_well_jail_cells: spawn area name "troll_hollow_prisoners" used 7 times (must be unique, used by scripts and savegames)
+  - map guynmart_wood_18b object "guynmart18_s3" (script): area 480,448 64x32 extends outside the 15x24 map
+  - map guynmart_wood_19: spawn area name "beetle_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map swamp1 object "fieldcritter_2" (spawn): area 96,96 480x480 extends outside the 20x9 map
+  - map swamp3 object "swamp2a" (replace): area 640,-2 160x288 extends outside the 25x15 map
+  - map swamp3 object "swamp2a_b" (replace): area 640,-2 160x288 extends outside the 25x15 map
+  - map swamp6 object "feygard_fogmonster_check" (script): area 32,0 800x800 extends outside the 25x25 map
+  - map wexlow_village: spawn area name "wexlow_villagers_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map wexlow_village: spawn area name "wexlow_village_ant" used 9 times (must be unique, used by scripts and savegames)
+  - map wexlow_village_se_house: spawn area name "wexlow_villagers_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map crackshot_hideout4: spawn area name "spearborn_thrall_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_10: spawn area name "grass_spider_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_11: spawn area name "grass_spider_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_12: spawn area name "dirt_spider_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_12a: spawn area name "dirt_spider_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_13: spawn area name "flying_tree_ant_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_14: spawn area name "snapmaw_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_14: spawn area name "flying_tree_ant_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_15: spawn area name "snapmaw_spawn" used 7 times (must be unique, used by scripts and savegames)
+  - map galmore_15: spawn area name "dirt_spider_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_16: spawn area name "snapmaw_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_17: spawn area name "giant_mosquito_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_17: spawn area name "swamp_hornet_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_17: spawn area name "swamp_bettle_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_18: spawn area name "non_leetch_monster_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_18: spawn area name "leetch_monster_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_18: spawn area name "swamp_hornet_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_18: spawn area name "giant_mosquito_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_19: spawn area name "crocodilian_behemoth_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_23: spawn area name "harrowback_spawn" used 7 times (must be unique, used by scripts and savegames)
+  - map galmore_23: spawn area name "thorny_vine_bottom_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_24: spawn area name "harrowback_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_24: spawn area name "ridgehowler_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_25: spawn area name "snapmaw_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_25: spawn area name "ridgehowler_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_26: spawn area name "snapmaw_spawn" used 7 times (must be unique, used by scripts and savegames)
+  - map galmore_27: spawn area name "snapmaw_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_27: spawn area name "swamp_hornet_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_27: spawn area name "giant_mosquito_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_27: spawn area name "swamp_bettle_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_28: spawn area name "non_leetch_monster_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_28: spawn area name "leetch_monster_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_28: spawn area name "giant_mosquito_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_28: spawn area name "swamp_hornet_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_28: spawn area name "crocodilian_behemoth_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_29: spawn area name "giant_mosquito_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_29: spawn area name "swamp_bettle_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_29: spawn area name "sutdover_snapper_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_32: spawn area name "pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_33: spawn area name "harrowback_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_33: spawn area name "thorny_vine_bottom_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_34: spawn area name "harrowback_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_34: spawn area name "mutated_harrowback_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_34: spawn area name "ridgehowler_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_35: spawn area name "dirt_spider_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_35: spawn area name "ridgehowler_spawn" used 7 times (must be unique, used by scripts and savegames)
+  - map galmore_35: spawn area name "grass_spider_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_36: spawn area name "pond_fish_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_36: spawn area name "sutdover_snapper_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_36: spawn area name "ridgehowler_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_37: spawn area name "snapmaw_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_37: spawn area name "giant_mosquito_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_38: spawn area name "non_leetch_monster_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_38: spawn area name "leetch_monster_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_38: spawn area name "crocodilian_behemoth_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_38: spawn area name "giant_mosquito_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_38: spawn area name "swamp_hornet_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_39: spawn area name "crocodilian_behemoth_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_39: spawn area name "swamp_hornet_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_39: spawn area name "sutdover_snapper_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_41: spawn area name "pyreling_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_41: spawn area name "erupting_pyreling_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_41: spawn area name "molten_pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_41: spawn area name "spitfire_bug_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_42: spawn area name "pyreling_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_42: spawn area name "erupting_pyreling_spawn" used 9 times (must be unique, used by scripts and savegames)
+  - map galmore_42: spawn area name "molten_pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_42: spawn area name "spitfire_bug_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_43: spawn area name "molten_pyreling_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_43: spawn area name "spitfire_bug_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_44: spawn area name "mutated_harrowback_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_44: spawn area name "dirt_spider_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_44: spawn area name "ridgehowler_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_45: spawn area name "young_spitfire_bug_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_45: spawn area name "mutated_harrowback_spawn" used 11 times (must be unique, used by scripts and savegames)
+  - map galmore_45: spawn area name "ridgehowler_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_46: spawn area name "pond_fish_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_46: spawn area name "young_spitfire_bug_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_46: spawn area name "mutated_harrowback_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_47: spawn area name "sutdover_snapper_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_48: spawn area name "aroughcun_kit_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_48: spawn area name "aroughcun_sow_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_52: spawn area name "pyreling_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_52: spawn area name "erupting_pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_53: spawn area name "molten_pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_53: spawn area name "erupting_pyreling_spawn" used 10 times (must be unique, used by scripts and savegames)
+  - map galmore_53: spawn area name "spitfire_bug_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_54: spawn area name "mt_bridge_bogling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_54: spawn area name "mg2_wolves" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_54: spawn area name "mg2_wolves_pup" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_55: spawn area name "mt_bridge_bogling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_55: spawn area name "dreadmane_spawn" used 12 times (must be unique, used by scripts and savegames)
+  - map galmore_55: spawn area name "aroughcun_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_56: spawn area name "river_wretch_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_57: spawn area name "dreadmane_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_57: spawn area name "aroughcun_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_58: spawn area name "scardy_aroughcun_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_58: spawn area name "aroughcun_sow_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_58: spawn area name "aroughcun_kit_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_62: spawn area name "pyreling_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_62: spawn area name "embergeist_spawn" used 12 times (must be unique, used by scripts and savegames)
+  - map galmore_62: spawn area name "lava_entity_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_63: spawn area name "mt_bridge_bogling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_63: spawn area name "dreadmane_spawn" used 12 times (must be unique, used by scripts and savegames)
+  - map galmore_63: spawn area name "aroughcun_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_64: spawn area name "dreadmane_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_64: spawn area name "aroughcun_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_65: spawn area name "mt_bridge_bogling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_65: spawn area name "dreadmane_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_65: spawn area name "river_wretch_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_65: spawn area name "aroughcun_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_66: spawn area name "mt_bridge_bogling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_66: spawn area name "dreadmane_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_66: spawn area name "aroughcun_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_66: spawn area name "river_wretch_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_66_house: spawn area name "aroughcun_kit_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_67: spawn area name "aroughcun_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_67: spawn area name "aroughcun_sow_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_67: spawn area name "scardy_aroughcun_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_67: spawn area name "dreadmane_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_68: spawn area name "aroughcun_agile_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_68: spawn area name "aroughcun_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_72: spawn area name "embergeist_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_72: spawn area name "lava_entity_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_73: spawn area name "mt_bridge_bogling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_73: spawn area name "dreadmane_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_73: spawn area name "aroughcun_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_74: spawn area name "mt_bridge_bogling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_74: spawn area name "young_glacibite_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_74: spawn area name "dreadmane_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_75: spawn area name "young_glacibite_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_75: spawn area name "glacibite_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_76: spawn area name "glacibite_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_76: spawn area name "young_glacibite_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map galmore_77: spawn area name "young_glacibite_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map galmore_77: spawn area name "dreadmane_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map galmore_85: spawn area name "glacibite_spawn" used 8 times (must be unique, used by scripts and savegames)
+  - map galmore_85: spawn area name "young_glacibite_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map galmore_86: spawn area name "laska_blizz_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map galmore_rail_cave: spawn area name "scardy_aroughcun_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map nw_sullengard_1: spawn area name "cyclopea_creeper_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map nw_sullengard_1: spawn area name "red_tree_ant_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map nw_sullengard_1: spawn area name "agg_cyclopea_creeper_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map stoutford_filler_1: spawn area name "vine_bottom_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map stoutford_filler_1: spawn area name "dirt_spider_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map stoutford_filler_2: spawn area name "vine_bottom_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map stoutford_filler_2: spawn area name "dirt_spider_spawn" used 9 times (must be unique, used by scripts and savegames)
+  - map stoutford_filler_3: spawn area name "dirt_spider_spawn" used 11 times (must be unique, used by scripts and savegames)
+  - map stoutford_filler_4: spawn area name "dirt_spider_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map brightport3: spawn area name "brightportcitizen" used 2 times (must be unique, used by scripts and savegames)
+  - map brightport5: spawn area name "brightportbakeryoutside2" used 2 times (must be unique, used by scripts and savegames)
+  - map brightport_cave12: spawn area name "brightport_scorpion" used 2 times (must be unique, used by scripts and savegames)
+  - map brightport_school11: spawn area name "tiny_rat" used 2 times (must be unique, used by scripts and savegames)
+  - map brightportwild1: spawn area name "duleian_mountain_cat" used 5 times (must be unique, used by scripts and savegames)
+  - map brightportwild9: spawn area name "elderdeer" used 3 times (must be unique, used by scripts and savegames)
+  - map brightportwild9: spawn area name "brightport_squirrel" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport11: spawn area name "virilefawn" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport11: spawn area name "virilefawn2" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport13: spawn area name "deer" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport13: spawn area name "brightport_fawn2" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport13: spawn area name "brightport_fawn4" used 3 times (must be unique, used by scripts and savegames)
+  - map waytobrightport14: spawn area name "squirmers" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport14: spawn area name "virilefawn" used 4 times (must be unique, used by scripts and savegames)
+  - map waytobrightport16: spawn area name "squirmer" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport16: spawn area name "lizardmancorsair" used 3 times (must be unique, used by scripts and savegames)
+  - map waytobrightport20: spawn area name "squirmer" used 2 times (must be unique, used by scripts and savegames)
+  - map waytobrightport3: spawn area name "fawn" used 3 times (must be unique, used by scripts and savegames)
+  - map waytobrightport7: spawn area name "deer" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_00: spawn area name "erupting_pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_00: spawn area name "drybone_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_00: spawn area name "molten_pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_03: spawn area name "gilded_dust_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_04: spawn area name "undertell_bat_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_04: spawn area name "gilded_dust_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_05: spawn area name "forgotten_miner_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_10: spawn area name "molten_pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_10: spawn area name "drybone_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_11: spawn area name "molten_pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_11: spawn area name "drybone_lich_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_12: spawn area name "bone_marshal_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_12: spawn area name "bone_marshal_lich_help_liches_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_12: spawn area name "drybone_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_12: spawn area name "young_rock_eater_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_13: spawn area name "forgotten_miner_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map undertell_13: spawn area name "undertell_bat_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_13: spawn area name "young_rock_eater_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_14: spawn area name "young_rock_eater_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_14: spawn area name "undertell_bat_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_14: spawn area name "forgotten_miner_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_15: spawn area name "forgotten_miner_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_15: spawn area name "undertell_bat_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_1_0: spawn area name "nyratees_spawn" used 16 times (must be unique, used by scripts and savegames)
+  - map undertell_1_1: spawn area name "spider_queen_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_1_1: spawn area name "nyratees_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map undertell_21: spawn area name "molten_pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_21: spawn area name "bone_marshal_lich_help_plague_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_21: spawn area name "drybone_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_22: spawn area name "young_rock_eater_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_22: spawn area name "undertell_bat_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_23: spawn area name "forgotten_miner_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_23: spawn area name "undertell_bat_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_24: spawn area name "forgotten_miner_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_24: spawn area name "undertell_bat_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_00: spawn area name "liberated_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map undertell_3_00: spawn area name "young_rock_eater_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_01: spawn area name "undertell_bat_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_01: spawn area name "young_rock_eater_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_3_02: spawn area name "liberated_spawn" used 6 times (must be unique, used by scripts and savegames)
+  - map undertell_3_03: spawn area name "liberated_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_03: spawn area name "young_rock_eater_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_10: spawn area name "young_rock_eater_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_11: spawn area name "liberated_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_11: spawn area name "young_rock_eater_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_12: spawn area name "young_rock_eater_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_12: spawn area name "liberated_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_13: spawn area name "liberated_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_13: spawn area name "young_rock_eater_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_00: spawn area name "pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_00: spawn area name "erupting_pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_00: spawn area name "hexbinder_help_liches_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_00: spawn area name "dreadstaff_help_liches_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_01: spawn area name "erupting_pyreling_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_01: spawn area name "pyreling_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_10: spawn area name "plague_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_10: spawn area name "hexbinder_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_10: spawn area name "erupting_pyreling_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_10: spawn area name "dreadstaff_help_plague_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_3_lava_11: spawn area name "hexbinder_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_4_00: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_4_00: spawn area name "embergeist_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_4_01: spawn area name "embergeist_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_4_01: spawn area name "lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_4_01: spawn area name "help_others_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_4_10: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_4_10: spawn area name "embergeist_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_4_10: spawn area name "kazaul_seer_lich_help_plague_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_4_11: spawn area name "embergeist_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_4_11: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_5: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_5: spawn area name "hexbinder_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_5: spawn area name "kazaul_seer_lich_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_5: spawn area name "dreadblade_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_7_00: spawn area name "lich_spawn2" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_00: spawn area name "lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_00: spawn area name "kazaul_seer_lich_help_plague_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_00: spawn area name "embergeist_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_01: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_7_01: spawn area name "embergeist_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_01: spawn area name "kazaul_seer_lich_help_plague_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_10: spawn area name "lich_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_10: spawn area name "help_others_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_10: spawn area name "embergeist_spawn" used 5 times (must be unique, used by scripts and savegames)
+  - map undertell_7_10: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 4 times (must be unique, used by scripts and savegames)
+  - map undertell_7_10: spawn area name "kazaul_seer_lich_help_plague_spawn" used 2 times (must be unique, used by scripts and savegames)
+  - map undertell_7_11: spawn area name "embergeist_spawn" used 3 times (must be unique, used by scripts and savegames)
+  - map undertell_7_11: spawn area name "kazaul_crimson_arbiter_lich_spawn" used 3 times (must be unique, used by scripts and savegames)
+
+## missing-ref: 161
+  - monster lakecave2_key2 (monsterlist_stoutford_combined): unknown phrase "lakecave2_key_found"
+  - monster stn_burhczyd1 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd1"
+  - monster stn_burhczyd2 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd2"
+  - monster stn_burhczyd3 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd3"
+  - monster stn_burhczyd4 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd4"
+  - monster stn_burhczyd5 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd4"
+  - monster stn_burhczyd6 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd4"
+  - monster stn_burhczyd7 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd4"
+  - monster stn_burhczyd8 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd4"
+  - monster stn_burhczyd9 (monsterlist_stoutford_combined): unknown phrase "stn_burhczyd4"
+  - monster ll2_circe_crew (monsterlist_lake_laeroth_2): unknown phrase "ll2_circe_crew"
+  - monster sirene1 (monsterlist_lake_laeroth_2): unknown phrase "sirene1"
+  - monster sirene2 (monsterlist_lake_laeroth_2): unknown phrase "sirene2"
+  - monster sirene3 (monsterlist_lake_laeroth_2): unknown phrase "sirene3"
+  - map crossglen_cave object "ratdom_nondisplay_3" (replace): replacement layer "ratdom_ground" does not exist
+  - map blackwater_mountain43 object "bwm43_dummy" (key): key phrase "bwm72_corpse1_3" does not exist
+  - map mountainlake4 object "dummykey" (key): key phrase "dummykey" does not exist
+  - map stoutford_castle_barrack2 object "base_beamto_fallhaven" (mapchange): target place "base_beamto_stoutford" does not exist in map fallhaven_tavern
+  - map stoutford_castle_barrack2 object "base_beamto_flask" (mapchange): target place "base_beamto_stoutford" does not exist in map foaming_flask
+  - map ratdom_maze_421 object "north1" (mapchange): target map "ratdom_maze_411" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_463 object "south2" (mapchange): target map "ratdom_maze_474" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_563 object "south2" (mapchange): target map "ratdom_maze_574" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_564 object "south2" (mapchange): target map "ratdom_maze_575" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_566 object "south2" (mapchange): target map "ratdom_maze_577" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_567 object "south2" (mapchange): target map "ratdom_maze_578" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_653 object "south2" (mapchange): target map "ratdom_maze_663" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_661 object "south2" (mapchange): target map "ratdom_maze_672" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_662 object "south2" (mapchange): target map "ratdom_maze_673" does not exist, and the exit is on walkable tiles
+  - map ratdom_maze_666 object "south2" (mapchange): target map "ratdom_maze_677" does not exist, and the exit is on walkable tiles
+  - map brightport_bakery object "oven" (replace): replacement layer "oven" does not exist
+  - map ll2_cyclops_cave object "dummykey" (key): key phrase "dummykey" does not exist
+  - phrase graveyardwall_2 (conversationlist_graveyard1): spawnAll "graveyard_corpse_boss_kill" matches no spawn area in map graveyard1
+  - phrase lankson_begin (conversationlist_graveyard1): reply leads to unknown phrase "lankson10"
+  - phrase lankson_begin (conversationlist_graveyard1): reply leads to unknown phrase "lankson00"
+  - phrase guynmart_rmv_bridgeguard (conversationlist_guynmart2): removeSpawnArea "feygard_bridgeguard" matches no spawn area in map fields5
+  - phrase lakecave2_key_check2_90 (conversationlist_stoutford_combined): activateMapObjectGroup "Inactive" matches no object group in map lakecave2
+  - phrase base_beamto_enable (conversationlist_stoutford_combined): requirement wear on unknown item "ring_mikhail_DISABLED"
+  - phrase burhczydx_10_15 (conversationlist_burhczyd): removeSpawnArea "burhczyd15" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_15 (conversationlist_burhczyd): removeSpawnArea "burhczyd15e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_16 (conversationlist_burhczyd): removeSpawnArea "burhczyd16" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_16 (conversationlist_burhczyd): removeSpawnArea "burhczyd16e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_17 (conversationlist_burhczyd): removeSpawnArea "burhczyd17" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_17 (conversationlist_burhczyd): removeSpawnArea "burhczyd17e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_18 (conversationlist_burhczyd): removeSpawnArea "burhczyd18" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_18 (conversationlist_burhczyd): removeSpawnArea "burhczyd18e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_19 (conversationlist_burhczyd): removeSpawnArea "burhczyd19" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_19 (conversationlist_burhczyd): removeSpawnArea "burhczyd19e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_20 (conversationlist_burhczyd): removeSpawnArea "burhczyd20" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_20 (conversationlist_burhczyd): removeSpawnArea "burhczyd20e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_21 (conversationlist_burhczyd): removeSpawnArea "burhczyd21" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_21 (conversationlist_burhczyd): removeSpawnArea "burhczyd21e" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_22 (conversationlist_burhczyd): removeSpawnArea "burhczyd22" matches no spawn area in map crossglen_hall
+  - phrase burhczydx_10_22 (conversationlist_burhczyd): removeSpawnArea "burhczyd22e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check15_b (conversationlist_burhczyd): spawnAll "burhczyd15" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check15_b (conversationlist_burhczyd): removeSpawnArea "burhczyd15e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check15_e (conversationlist_burhczyd): removeSpawnArea "burhczyd15" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check15_e (conversationlist_burhczyd): spawnAll "burhczyd15e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check16_b (conversationlist_burhczyd): spawnAll "burhczyd16" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check16_b (conversationlist_burhczyd): removeSpawnArea "burhczyd16e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check16_e (conversationlist_burhczyd): removeSpawnArea "burhczyd16" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check16_e (conversationlist_burhczyd): spawnAll "burhczyd16e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check17_b (conversationlist_burhczyd): spawnAll "burhczyd17" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check17_b (conversationlist_burhczyd): removeSpawnArea "burhczyd17e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check17_e (conversationlist_burhczyd): removeSpawnArea "burhczyd17" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check17_e (conversationlist_burhczyd): spawnAll "burhczyd17e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check18_b (conversationlist_burhczyd): spawnAll "burhczyd18" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check18_b (conversationlist_burhczyd): removeSpawnArea "burhczyd18e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check18_e (conversationlist_burhczyd): removeSpawnArea "burhczyd18" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check18_e (conversationlist_burhczyd): spawnAll "burhczyd18e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check19_b (conversationlist_burhczyd): spawnAll "burhczyd19" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check19_b (conversationlist_burhczyd): removeSpawnArea "burhczyd19e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check19_e (conversationlist_burhczyd): removeSpawnArea "burhczyd19" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check19_e (conversationlist_burhczyd): spawnAll "burhczyd19e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check20_b (conversationlist_burhczyd): spawnAll "burhczyd20" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check20_b (conversationlist_burhczyd): removeSpawnArea "burhczyd20e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check20_e (conversationlist_burhczyd): removeSpawnArea "burhczyd20" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check20_e (conversationlist_burhczyd): spawnAll "burhczyd20e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check21_b (conversationlist_burhczyd): spawnAll "burhczyd21" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check21_b (conversationlist_burhczyd): removeSpawnArea "burhczyd21e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check21_e (conversationlist_burhczyd): removeSpawnArea "burhczyd21" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check21_e (conversationlist_burhczyd): spawnAll "burhczyd21e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check22_b (conversationlist_burhczyd): spawnAll "burhczyd22" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check22_b (conversationlist_burhczyd): removeSpawnArea "burhczyd22e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check22_e (conversationlist_burhczyd): removeSpawnArea "burhczyd22" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_check22_e (conversationlist_burhczyd): spawnAll "burhczyd22e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd15" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd15e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd16" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd16e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd17" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd17e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd18" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd18e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd19" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd19e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd20" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd20e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd21" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd21e" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd22" matches no spawn area in map crossglen_hall
+  - phrase burhczyd_remove_all (conversationlist_burhczyd): removeSpawnArea "burhczyd22e" matches no spawn area in map crossglen_hall
+  - phrase chk_wild_berry_10 (conversationlist_fungi_panic): spawnAll "wild_berry2" matches no spawn area in map guynmart_wood_8
+  - phrase chk_wild_berry_10 (conversationlist_fungi_panic): spawnAll "wild_berry3" matches no spawn area in map lodar19
+  - phrase chk_wild_berry_10 (conversationlist_fungi_panic): spawnAll "wild_berry3" matches no spawn area in map lodar21
+  - phrase chk_wild_berry_10 (conversationlist_fungi_panic): spawnAll "wild_berry3" matches no spawn area in map mountainlake7
+  - phrase chk_wild_berry_20 (conversationlist_fungi_panic): removeSpawnArea "wild_berry2" matches no spawn area in map guynmart_wood_8
+  - phrase chk_wild_berry_20 (conversationlist_fungi_panic): removeSpawnArea "wild_berry3" matches no spawn area in map lodar19
+  - phrase chk_wild_berry_20 (conversationlist_fungi_panic): removeSpawnArea "wild_berry3" matches no spawn area in map lodar21
+  - phrase chk_wild_berry_20 (conversationlist_fungi_panic): removeSpawnArea "wild_berry3" matches no spawn area in map mountainlake7
+  - phrase gison_p2_50_5 (conversationlist_gison): deactivateMapObjectGroup "Mapevents2" matches no object group in map mywildcave4
+  - phrase bwm72_corpse3_2 (conversationlist_omi2): switchToNPC "restless_dead_1" is not a monster
+  - phrase sull_ravine_grazia_60 (conversationlist_sullengard): removeSpawnArea "sull_ravine_grazia" matches no spawn area in map way_to_sullengard_east4
+  - phrase ratdom_rat_conv2c (conversationlist_ratdom): requirement wear on unknown item "ratdom_compass_3"
+  - phrase ratdom_rat_conv2c (conversationlist_ratdom): requirement wear on unknown item "ratdom_compass_4"
+  - phrase ratdom_rat_conv2c (conversationlist_ratdom): requirement wear on unknown item "ratdom_compass_5"
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance_grp" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance1" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance3" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance4" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance5" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance6" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): removeSpawnArea "ratdom_skel_dance7" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance2_grp" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance21" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance22" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance23" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance24" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance25" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance26" matches no spawn area in map ratdom_maze_543d
+  - phrase ratdom_skel_bone_30 (conversationlist_ratdom): spawnAll "ratdom_skel_dance27" matches no spawn area in map ratdom_maze_543d
+  - phrase lae_andor1_999_maybe_obsolete (conversationlist_laeroth): reply leads to unknown phrase "lae_andor2"
+  - phrase lae_torturer_10a (conversationlist_laeroth): removeSpawnArea "lae_prisoner2i" matches no spawn area in map laerothprison4
+  - phrase lae_torturer_10a (conversationlist_laeroth): removeSpawnArea "lae_prisoner3i" matches no spawn area in map laerothprison4
+  - phrase lae_torturer_10a (conversationlist_laeroth): removeSpawnArea "lae_prisoner4i" matches no spawn area in map laerothprison4
+  - phrase lae_torturer_10a (conversationlist_laeroth): spawnAll "lae_prisoner2a" matches no spawn area in map laerothprison4
+  - phrase lae_torturer_10a (conversationlist_laeroth): spawnAll "lae_prisoner3a" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): removeSpawnArea "lae_prisoner2" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): removeSpawnArea "lae_prisoner3" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): removeSpawnArea "lae_prisoner4" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): removeSpawnArea "lae_prisoner2a" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): removeSpawnArea "lae_prisoner3a" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): spawnAll "lae_prisoner2i" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): spawnAll "lae_prisoner3i" matches no spawn area in map laerothprison4
+  - phrase lae_demon4 (conversationlist_laeroth): spawnAll "lae_prisoner4i" matches no spawn area in map laerothprison4
+  - phrase tt_sly_120 (conversationlist_troubling_times): removeSpawnArea "thief_seraphina" matches no spawn area in map lake_shore_road_9
+  - phrase tt_sly5_30 (conversationlist_troubling_times): spawnAll "thief_seraphina" matches no spawn area in map lake_shore_road_9
+  - phrase brightport_gunfryk2 (conversationlist_brightport): deactivateSpawnArea "brightportguardcaptain" matches no spawn area in map brightport_bakery
+  - phrase brightport_guards_spawn_script (conversationlist_brightport): timerElapsed on timer "brightport_hide" that no reward ever creates
+  - phrase brightport_agent (conversationlist_brightport): timerElapsed on timer "Brightport_package" that no reward ever creates
+  - phrase brightport_agent (conversationlist_brightport): timerElapsed on timer "Brightport_package" that no reward ever creates
+  - phrase brightport_dirt1 (conversationlist_brightport): activateMapObjectGroup "Objects_0" matches no object group in map brightport_bakery1
+  - phrase brightport_dirt1 (conversationlist_brightport): activateMapObjectGroup "Objects_1" matches no object group in map brightport_bakery1
+  - phrase brightport_dirt1 (conversationlist_brightport): activateMapObjectGroup "Objects_2" matches no object group in map brightport_bakery1
+  - phrase brightport_gunfrykwait3 (conversationlist_brightport): deactivateSpawnArea "brightportguardcaptain" matches no spawn area in map brightport_bakery
+  - phrase brightport_gunfrykwait3 (conversationlist_brightport): spawnAll "brightportguardcaptain" matches no spawn area in map brightport_abandoned
+  - phrase brightport_gunfrykwait2 (conversationlist_brightport): spawnAll "guards" matches no spawn area in map brightport_abandoned
+  - phrase ll2_circe_checkspawn_10 (conversationlist_lake_laeroth_2): removeSpawnArea "ll2_crew" matches no spawn area in map mountainlake_circe
+  - phrase ll2_circe_46 (conversationlist_lake_laeroth_2): spawnAll "ll2_crew" matches no spawn area in map mountainlake_circe
+  - phrase ll2_circe_53 (conversationlist_lake_laeroth_2): reply leads to unknown phrase "ll2_circe_55"
+  - phrase scylla_2 (conversationlist_lake_laeroth_2): reply leads to unknown phrase "scylla_2_60"
+  - phrase vaelzahr_oegyth_selector (conversationlist_undertell): requirement inventoryKeep on unknown item "oegyth_crystal"
+
+## never-set: 143
+  - map crossglen_smith object "nondisplay:5" (key): requirement questProgress nondisplay:5 is never set by any reward
+  - map fallhaven_gravedigger object "Hatchlever" (key): requirement questProgress thieves_hidden:10 is never set by any reward
+  - map fallhaven_tavern object "fallhaventavern:20" (key): requirement questProgress fallhaventavern:20 is never set by any reward
+  - map mountainlake1 object "bridge" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map loneford13 object "loneford13_pitchfork" (key): requirement questProgress sullengard_hidden:500 is never set by any reward
+  - map guynmart_main_0 object "guynmart:666" (key): requirement questProgress guynmart:666 is never set by any reward
+  - map guynmart_main_0 object "guynmart:666" (key): requirement questProgress guynmart:666 is never set by any reward
+  - map guynmart_passage object "guynmart:666" (key): requirement questProgress guynmart:666 is never set by any reward
+  - map lakecave2 object "lakecave2_key_check2" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map waytogalmore0 object "stn_nondisplay:02" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map waytogalmore1 object "stn_nondisplay:02" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map waytolake12 object "north" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "south" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "southwest_a" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "southeast_b" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "northeast_a" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "northwest_b" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "northwest_a" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "west" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "southwest_b" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "northeast_b" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "east" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map waytolake12 object "southeast_a" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map arulirmountain1 object "base_nondisplay:2" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map arulirmountain1 object "base_nondisplay:2b" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven1 object "brv_employer_get_boulder" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven2 object "brv_sign_school" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven3 object "block_playing_children" (key): requirement questProgress brv_nondisplay:143 is never set by any reward
+  - map brimhaven_brother1_to_2 object "brother1_locked" (key): requirement questProgress brv_nondisplay_multipurpose:30 is never set by any reward
+  - map brimhaven_school object "brv_school_dummy" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven_school object "brv_school_dummy2" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven_school object "brv_school_dummy3" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven_school object "brv_school_dummy4" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven_school object "brv_school_dummy5" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map brimhaven_school object "brv_school_dummy6" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mushroom_m2_4b object "bogsten_tomb_dummy1" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mushroom_m2_4b object "bogsten_tomb_dummy2" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mushroom_m2_4b object "bogsten_tomb_dummy3" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mushroom_m2_4b object "bogsten_tomb_dummy4" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mywildcave2 object "trap21" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mywildcave3 object "trap32" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map mywildcave3 object "trap31" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map blackwater_mountain74_h object "bwm74_h_warning" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map blackwater_mountain75 object "bwm75_wellspring" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm5f_2 object "elm5f2_deep1" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm5f_2 object "elm5f2_deep2" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm5f_2 object "elm5f2_deep3" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm5f_2 object "elm5f2_deep4" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_2f_1 object "elm2f_crack" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_4f_5 object "elm4f5_locked" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine2 object "elm2_passage1" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine2 object "elm2_passage2c" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine2 object "elm2_passage1b" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine2 object "elm2_passage2b" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine2 object "elm2_bed" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine3 object "elm3_corpse" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine3 object "elm3_hole" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine4 object "elm4_sign" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map elm_mine5 object "elm5_ore" (key): requirement questProgress bwm72_beginning:11 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_1" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_2a" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_2b" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_2c" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_3a" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_3b" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_3c" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_3d" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_515 object "ratdom_rat_museum_sign_3e" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_543d object "skel_lute" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_543d object "skel_horn" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_543d object "skel_drum" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_543d object "skel_cymb" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_623 object "ratdom_rat_kriih_sign_1" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_624 object "ratdom_rat_warden_cave_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_632 object "ratdom_rat_eatme" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_632 object "ratdom_rat_drinkme" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_664 object "ratdom_water_flag" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_768 object "ratdom_well_1_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_768 object "ratdom_well_2_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_768 object "ratdom_well_3_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map ratdom_maze_768 object "ratdom_well_4_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map laerothcave0 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map laerothcave0 object "vine_key_2" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map laerothisland3 object "bridge" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map laerothisland3 object "tower_north" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map laerothisland3 object "tower_east" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map laerothisland3 object "tower_south" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map laerothisland3 object "tower_west" (key): requirement questProgress nondisplay_2:220 is never set by any reward
+  - map laerothprison7 object "dummy_key5" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map laerothprison7 object "dummy_key2" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map secretpassage1 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map guynmart_wood_16 object "feygard_offering" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map swamp3 object "feygard_swamp_sign" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map swamp_hut object "swamphut_oven" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map wayto_feygard_duleian_2 object "road_to_feygard_closed" (key): requirement questProgress feygard_nondisplayed:20 is never set by any reward
+  - map galmore_86 object "andor_ending_key1" (key): requirement questProgress andor_ending:1 is never set by any reward
+  - map stoutford_filler_1 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_1 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_1 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_2 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_2 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_2 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_3 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - map stoutford_filler_4 object "vine_key" (key): requirement questProgress base_nondisplay:2 is never set by any reward
+  - phrase guynmart_wizard_20 (conversationlist_guynmart_npc): requirement questProgress guynmart:190444 is never set by any reward
+  - phrase blornvale_thorns50 (conversationlist_stoutford_combined): requirement questProgress thorns_vengeance:200 is never set by any reward
+  - phrase odirath_3_5 (conversationlist_stoutford_combined): requirement questProgress stn_nondisplay:149 is never set by any reward
+  - phrase yolgen_task_0 (conversationlist_stoutford_combined): requirement questProgress not_yet_realized:10 is never set by any reward
+  - phrase yolgen_task_0 (conversationlist_stoutford_combined): requirement questProgress not_yet_realized:10 is never set by any reward
+  - phrase yolgen_castle_1 (conversationlist_stoutford_combined): requirement questProgress stoutford_castle:40 is never set by any reward
+  - phrase stoutford_guard_camp2_40 (conversationlist_stoutford_combined): requirement questProgress stn_nondisplay:4 is never set by any reward
+  - phrase brv_employer (conversationlist_brimhaven): requirement questProgress brv_employee:1 is never set by any reward
+  - phrase brv_teacher (conversationlist_brimhaven2): requirement questProgress brv_school2:12 is never set by any reward
+  - phrase ehrenfest_selector_2 (conversationlist_omi2): requirement questProgress Omi2_bwm1:32 is never set by any reward
+  - phrase faction_count_shadow_90 (conversationlist_factions): requirement questProgress faction_count_shadow:90 is never set by any reward
+  - phrase faction_count_shadow_210 (conversationlist_factions): requirement questProgress faction_count_shadow:210 is never set by any reward
+  - phrase faction_count_shadow_220 (conversationlist_factions): requirement questProgress faction_count_shadow:220 is never set by any reward
+  - phrase faction_count_shadow_230 (conversationlist_factions): requirement questProgress faction_count_shadow:230 is never set by any reward
+  - phrase faction_count_shadow_240 (conversationlist_factions): requirement questProgress faction_count_shadow:240 is never set by any reward
+  - phrase faction_count_shadow_250 (conversationlist_factions): requirement questProgress faction_count_shadow:250 is never set by any reward
+  - phrase faction_count_shadow_260 (conversationlist_factions): requirement questProgress faction_count_shadow:260 is never set by any reward
+  - phrase faction_count_shadow_270 (conversationlist_factions): requirement questProgress faction_count_shadow:270 is never set by any reward
+  - phrase faction_count_shadow_280 (conversationlist_factions): requirement questProgress faction_count_shadow:280 is never set by any reward
+  - phrase faction_count_shadow_290 (conversationlist_factions): requirement questProgress faction_count_shadow:290 is never set by any reward
+  - phrase sull_ravine_grazia_70 (conversationlist_sullengard): requirement questProgress sullengard_hidden:19 is never set by any reward
+  - phrase ratdom_wells_init_14 (conversationlist_ratdom): requirement questProgress base_nondisplay:2 is never set by any reward
+  - phrase wicked_witch_first_selector (conversationlist_mt_galmore): requirement questLatestProgress wicked_witch:55 is never set by any reward
+  - phrase dbg_scores (conversationlist_debug): requirement questProgress scores:10 is never set by any reward
+  - phrase dbg_scores_10 (conversationlist_debug): requirement questProgress scores:20 is never set by any reward
+  - phrase dbg_scores_20 (conversationlist_debug): requirement questProgress scores:30 is never set by any reward
+  - phrase fsc_calc_bmp_x (conversationlist_fsc_calc): requirement questProgress scores:10 is never set by any reward
+  - phrase fsc_calc_shd_x (conversationlist_fsc_calc): requirement questProgress scores:20 is never set by any reward
+  - phrase fsc_calc_fey_x (conversationlist_fsc_calc): requirement questProgress scores:30 is never set by any reward
+  - phrase fsc_calc_thv_x (conversationlist_fsc_calc): requirement questProgress scores:10 is never set by any reward
+  - phrase fsc_calc_shd1_x (conversationlist_fsc_calc): requirement questProgress scores:20 is never set by any reward
+  - phrase fsc_calc_fey1_x (conversationlist_fsc_calc): requirement questProgress scores:30 is never set by any reward
+  - phrase brightport_broom_selector1 (conversationlist_brightport): requirement questProgress brightport_nondisplay:185 is never set by any reward
+  - phrase brightport_thiefboss_introduction3 (conversationlist_brightport): requirement questProgress andor_ending:900 is never set by any reward
+  - phrase brightport_frederich_selector (conversationlist_brightport): requirement questProgress brightport_nondisplay:224 is never set by any reward
+  - phrase brightport_frederich_selector (conversationlist_brightport): requirement questProgress brightport_nondisplay:225 is never set by any reward
+  - phrase brightport_lecture_warning (conversationlist_brightport): requirement questProgress brightport_nondisplay:225 is never set by any reward
+  - phrase brightport_lecture_warning (conversationlist_brightport): requirement questProgress brightport_nondisplay:225 is never set by any reward
+  - phrase scylla_2 (conversationlist_lake_laeroth_2): requirement questProgress lake_map:64 is never set by any reward
+
+## quest-log: 10
+  - phrase sign_wolf_pack_jakrar_1 (conversationlist_pathway_fallhaven): questProgress pathway_fallhaven:35 has no log stage in quest "pathway_fallhaven" (no log text, no XP)
+  - phrase guynmart_gguard_380 (conversationlist_guynmart_npc): questProgress guynmart_quest_gguard:82 has no log stage in quest "guynmart_quest_gguard" (no log text, no XP)
+  - phrase guynmart_lovis_40 (conversationlist_guynmart_npc): questProgress guynmart_nondisplay:6 has no log stage in quest "guynmart_nondisplay" (no log text, no XP)
+  - phrase berbane_32 (conversationlist_stoutford_combined): questProgress nondisplay:149 has no log stage in quest "nondisplay" (no log text, no XP)
+  - phrase berbane_132 (conversationlist_stoutford_combined): questProgress nondisplay:149 has no log stage in quest "nondisplay" (no log text, no XP)
+  - phrase stn_colonel_152 (conversationlist_stoutford_combined): questProgress stn_nondisplay:160 has no log stage in quest "stn_nondisplay" (no log text, no XP)
+  - phrase stn_colonel_153 (conversationlist_stoutford_combined): questProgress stn_nondisplay:160 has no log stage in quest "stn_nondisplay" (no log text, no XP)
+  - phrase brv_brothers_found_coin_bag (conversationlist_brimhaven): questProgress brv_flood:75 has no log stage in quest "brv_flood" (no log text, no XP)
+  - phrase brightport_gunfryk19 (conversationlist_brightport): questProgress brightport_goons:150 has no log stage in quest "brightport_goons" (no log text, no XP)
+  - phrase scylla_2_30 (conversationlist_lake_laeroth_2): questProgress lake_map:66 has no log stage in quest "lake_map" (no log text, no XP)
+
+## tileset: 2
+  - tileset monsters_newb_2: monsters_newb_2.png is 512x64, grid needs 256x128
+  - tileset monsters_newb_4: monsters_newb_4.png is 128x64, grid needs 256x32
+
+## worldmap: 1
+  - map "lakecave1" is in segments lakecave and world1
