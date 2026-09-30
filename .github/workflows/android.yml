@@ -31,7 +31,8 @@ jobs:
         run: cd AndorsTrail && ./gradlew testDebugUnitTest testReleaseUnitTest assembleDebug assembleRelease
 
       - name: Lint
-        run: cd AndorsTrail && ./gradlew lintDebug
+        # The default daemon heap is too small to lint the 1,296 map resources.
+        run: cd AndorsTrail && ./gradlew -Dorg.gradle.jvmargs=-Xmx4g lintDebug
 
       - name: APK report
         run: |
