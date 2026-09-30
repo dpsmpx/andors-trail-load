@@ -26,21 +26,23 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5.0.2
 
-      - name: Build and test
-        # Release unit tests run the code paths of release builds (DEVELOPMENT_* flags off).
-        run: cd AndorsTrail && ./gradlew testDebugUnitTest testReleaseUnitTest assembleDebug assembleRelease
-
-      - name: Lint
-        # The default daemon heap is too small to lint the 1,296 map resources.
-        # TEMPORARY: generates the lint baseline and prints it (gzip, base64) so that it can be
-        # committed; replaced by a plain lintDebug in the next commit.
+      # TEMPORARY: generates the lint baseline and prints it (gzip, base64) so that it can be
+      # committed. Removed in the commit that adds app/lint-baseline.xml.
+      - name: Generate lint baseline
         run: |
           cd AndorsTrail
           ./gradlew -Dorg.gradle.jvmargs=-Xmx4g updateLintBaseline
           echo "LINT-BASELINE-BEGIN"
           gzip -9c app/lint-baseline.xml | base64 -w 120
           echo "LINT-BASELINE-END"
-          ./gradlew -Dorg.gradle.jvmargs=-Xmx4g lintDebug
+
+      - name: Build and test
+        # Release unit tests run the code paths of release builds (DEVELOPMENT_* flags off).
+        run: cd AndorsTrail && ./gradlew testDebugUnitTest testReleaseUnitTest assembleDebug assembleRelease
+
+      - name: Lint
+        # The default daemon heap is too small to lint the 1,296 map resources.
+        run: cd AndorsTrail && ./gradlew -Dorg.gradle.jvmargs=-Xmx4g lintDebug
 
       - name: APK report
         run: |
