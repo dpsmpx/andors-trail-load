@@ -64,6 +64,11 @@ android {
         buildConfig = true
     }
 
+    lint {
+        // Issues that existed when lint was added to CI. New issues fail the build.
+        baseline = file("lint-baseline.xml")
+    }
+
     namespace = 'com.gpl.rpg.AndorsTrail'
 
     sourceSets {

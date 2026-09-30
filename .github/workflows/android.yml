@@ -32,7 +32,15 @@ jobs:
 
       - name: Lint
         # The default daemon heap is too small to lint the 1,296 map resources.
-        run: cd AndorsTrail && ./gradlew -Dorg.gradle.jvmargs=-Xmx4g lintDebug
+        # TEMPORARY: generates the lint baseline and prints it (gzip, base64) so that it can be
+        # committed; replaced by a plain lintDebug in the next commit.
+        run: |
+          cd AndorsTrail
+          ./gradlew -Dorg.gradle.jvmargs=-Xmx4g updateLintBaseline
+          echo "LINT-BASELINE-BEGIN"
+          gzip -9c app/lint-baseline.xml | base64 -w 120
+          echo "LINT-BASELINE-END"
+          ./gradlew -Dorg.gradle.jvmargs=-Xmx4g lintDebug
 
       - name: APK report
         run: |
