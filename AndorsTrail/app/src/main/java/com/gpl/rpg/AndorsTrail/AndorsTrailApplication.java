@@ -2,6 +2,7 @@ package com.gpl.rpg.AndorsTrail;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -9,6 +10,7 @@ import com.gpl.rpg.AndorsTrail.context.ControllerContext;
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
 import com.gpl.rpg.AndorsTrail.controller.Constants;
 import com.gpl.rpg.AndorsTrail.util.AndroidStorage;
+import com.gpl.rpg.AndorsTrail.util.L;
 
 import android.app.Activity;
 import android.app.Application;
@@ -142,6 +144,20 @@ public final class AndorsTrailApplication extends Application {
 		return true;
 	}
 
+	// Each start of a debug build writes a new log file.
+	private static final int MAX_LOG_FILES = 10;
+
+	// Keeps the newest "logcat<time>.txt" files. Package-private for AndorsTrailApplicationTest.
+	static void deleteOldLogFiles(File logDirectory, int keep) {
+		File[] logs = logDirectory.listFiles((dir, name) -> name.startsWith("logcat") && name.endsWith(".txt"));
+		if (logs == null || logs.length <= keep) return;
+		// The names contain System.currentTimeMillis(), which has the same number of digits until 2286.
+		Arrays.sort(logs);
+		for (int i = 0; i < logs.length - keep; ++i) {
+			if (!logs[i].delete()) L.warn("Cannot delete " + logs[i]);
+		}
+	}
+
 	// Supports language or language-COUNTRY in short form e.g. "en" or "en-US"
 	// Package-private for AndorsTrailApplicationTest.
 	static Locale localeForLanguageTag(String languageTag, Locale defaultLocale) {
@@ -190,6 +206,7 @@ public final class AndorsTrailApplication extends Application {
 			if ( !logDirectory.exists() ) {
 				logDirectory.mkdir();
 			}
+			deleteOldLogFiles(logDirectory, MAX_LOG_FILES - 1);
 
 			// clear the previous logcat and then write the new one to the file
 			try {
